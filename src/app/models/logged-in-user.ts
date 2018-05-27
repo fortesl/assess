@@ -3,3 +3,9 @@ export interface LoggedInUser {
   email: string;
   roles: string[];
 }
+
+export const userReset: LoggedInUser = {
+  name: '',
+  email: '',
+  roles: []
+  };

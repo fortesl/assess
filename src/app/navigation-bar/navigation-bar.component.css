@@ -1,0 +1,14 @@
+.mat-button {
+  padding: 0.4rem;
+}
+
+.arrow-drop-down {
+  left: 2rem;
+}
+.active-nav-link {
+  background-color: rgba(197,202,233,.3);
+}
+
+.hide {
+  display: none;
+}

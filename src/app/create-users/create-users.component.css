@@ -1,0 +1,35 @@
+.header {
+  width: 80%;
+  font-weight: 700;
+  font-size: 3rem;
+  margin: 2rem auto 1rem auto;
+}
+.create-user-form {
+  width: 80%;
+  margin: auto;
+}
+.email {
+  width: 100%;
+}
+.name {
+  width: 100%;
+}
+.submit {
+  margin-top: 1rem;
+}
+.create-fail {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.create-success {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: green;
+}
+.mat-icon.email {
+  color: rgb(80, 57, 143);
+  margin-right: 0.5rem;
+}
+.mat-radio-button {
+   margin-right: 1rem;
+}

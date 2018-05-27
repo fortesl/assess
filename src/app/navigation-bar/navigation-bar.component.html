@@ -7,14 +7,14 @@
     <span *ngIf="!link.icon">{{ link.label }}</span>
     <mat-icon [title]="link.label" *ngIf="link.icon">{{ link.icon }}</mat-icon>
   </a>
-
   <ng-template #anonymousUser>
     <button
       (click)="login()"
       mat-button
-      [ngClass]="{'active-nav-link': currentUrl === '/login'}"
+      [ngClass]="{'active-nav-link': currentRoute.url === '/login'}"
     >
-      {{ loggedOutUserMenu.label }}
+      <span *ngIf="!loggedOutUserMenu.icon">{{ loggedOutUserMenu.label }}</span>
+      <mat-icon [title]="loggedOutUserMenu.label" *ngIf="loggedOutUserMenu.icon">{{ loggedOutUserMenu.icon }}</mat-icon>
     </button>
   </ng-template>
 
@@ -23,7 +23,7 @@
     mat-button
     [matMenuTriggerFor]="menu"
   >
-    {{ auth.loggedInUser.name }}
+    {{ auth.loggedInUser.name || auth.loggedInUser.email}}
     <mat-icon>arrow_drop_down</mat-icon>
   </button>
 </nav>

@@ -1,3 +1,44 @@
-<p>
-  login works!
-</p>
+<!--  -->
+<div class="header">Sign in</div>
+<form class="login-form" [formGroup]="form" (ngSubmit)="submit(form.value)">
+  <div formGroupName="login">
+  <mat-form-field class="username">
+    <mat-icon class="email" matPrefix>email</mat-icon>
+      <input
+        formControlName="username"
+        matInput
+        placeholder="email address">
+      <mat-error *ngIf="username.invalid && username.errors['email']">
+        invalid email address
+      </mat-error>
+      <mat-error *ngIf="username.invalid && username.errors['required']">
+          email address is required.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="password">
+      <input
+        formControlName="password"
+        type="password"
+        matInput
+        placeholder="Password">
+        <mat-error *ngIf="password.invalid && password.errors['required']">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="password.invalid && password.errors['minlength']">
+            Password must be at least {{ password.errors['minlength.requiredLength'] }} characters
+        </mat-error>
+    </mat-form-field>
+  </div>
+  <button
+    [disabled]="form.pending || form.untouched || form.invalid"
+    class="submit"
+    mat-raised-button
+    color="primary"
+    type=submit>Sign in
+  </button>
+  <a
+    routerLink="."
+    class="reset">Reset Password
+  </a>
+  <mat-error class="login-failed">{{ loginFailed }}</mat-error>
+</form>

@@ -5,7 +5,7 @@ import { AuthService } from '../common/services/auth.service';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { UserService } from '../common/services/user.service';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class SuperAdminAuthGuard implements CanActivate {

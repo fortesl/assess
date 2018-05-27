@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { SuperAdminAuthGuard } from './super-admin-auth-guard.service';
+import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 
 describe('SuperAdminAuthGuard', () => {
   beforeEach(() => {

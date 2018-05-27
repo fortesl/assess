@@ -2,17 +2,24 @@ import { Component } from '@angular/core';
 import { NavItem } from './nav-item';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../common/services/auth.service';
+import { CurrentRouteService } from '../common/current-route.service';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
-  styleUrls: ['./navigation-bar.component.scss']
+  styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationBarComponent {
-  constructor(private router: Router, public auth: AuthService) {}
+  constructor(private router: Router, public currentRoute: CurrentRouteService, public auth: AuthService) {
+    router.events
+      .subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          currentRoute.url = event.url;
+        }
+      });
+  }
 
   userMenuSelection: NavItem;
-  currentUrl: string;
 
   navLinks = [
     { label: 'Home', path: ['/'], icon: 'home' },
@@ -20,19 +27,20 @@ export class NavigationBarComponent {
 
   loggedInUserMenu: NavItem = {
     label: 'UserName',
-    icon: 'user',
+    icon: 'person',
     items: [
       { label: 'Create Users', path: ['/admin/users/create'], roles: ['admin'] },
       { label: 'Create Assessment', path: ['/admin/assess/create'], roles: ['admin'] },
       { label: 'Create Questions', path: ['/admin/questions/create'], roles: ['admin'] },
       { label: 'View Questions', path: ['/admin/questions/view'], roles: ['admin'] },
       { label: 'View Results', path: ['/admin/results'], roles: ['admin'] },
-      { label: 'Logout', path: ['/home'] }
+      { label: 'Logout', path: ['/'] }
     ]
   };
 
   loggedOutUserMenu: NavItem = {
     label: 'Login',
+    icon: 'person',
     path: ['/login']
   };
 
