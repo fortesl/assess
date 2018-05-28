@@ -10,6 +10,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDividerModule
   ],
   exports: [
     MatButtonModule,
@@ -35,7 +37,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatRadioModule,
+    MatDividerModule
   ],
 })
 export class ShopMaterialModule { }

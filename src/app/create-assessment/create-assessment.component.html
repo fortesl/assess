@@ -1,3 +1,104 @@
-<p>
-  create-assessment works!
-</p>
+
+<div class="create-assessment">
+  <div class="header">
+    Create Assessment
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+    <mat-form-field class="name">
+      <input 
+        matInput
+        formControlName="name" 
+        placeholder="Assessment name">
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="pages-container">
+      <div class="admin-page" formGroupName="adminPage">
+        <h2>Administrator landing page</h2>
+        <mat-form-field class="title">
+          <input
+            formControlName="title"
+            matInput
+            placeholder="Page title">
+            </mat-form-field>
+        <mat-form-field class="header">
+          <textarea
+            matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"
+            formControlName="header"
+            matInput
+            placeholder="Page header">
+          </textarea>
+          </mat-form-field>
+          <mat-form-field class="content">
+          <textarea
+            matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"
+            formControlName="content"
+            matInput
+            placeholder="Page main content">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field class="footer">
+          <textarea
+            matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"
+            formControlName="footer"
+            matInput
+            placeholder="Page footer">
+          </textarea>
+        </mat-form-field>      
+      </div>
+      <mat-divider></mat-divider>
+      <div class="user-page" formGroupName="userPage">
+        <h2>User landing page</h2>
+        <mat-form-field class="title">
+          <input
+            formControlName="title"
+            matInput
+            placeholder="Page title">
+        </mat-form-field>
+        <mat-form-field class="header">
+          <textarea
+            matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"
+            formControlName="header"
+            matInput
+            placeholder="Page header">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field class="content">
+          <textarea
+            matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"
+            formControlName="content"
+            matInput
+            placeholder="Page main content">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field class="footer">
+          <textarea
+            matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="5"
+            formControlName="footer"
+            matInput
+            placeholder="Page footer">
+          </textarea>
+        </mat-form-field>      
+      </div>
+    </div>          
+    <mat-divider></mat-divider>
+    <button
+      [disabled]="form.pending || form.untouched || form.invalid"
+      class="submit"
+      mat-raised-button
+      color="primary"
+      type=submit>Create
+    </button>
+    <button
+      routerLink="."
+      (click)="cancel($event)"
+      mat-raised-button
+      class="reset">Cancel
+    </button>
+  </form>
+</div>

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoggedInUser, userReset } from '../../models/logged-in-user';
+import { AppUser, userReset } from '../../models/app-user';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
@@ -20,24 +21,15 @@ export class AuthService {
     return this._loggedInUser;
   }
 
-  setLoggedInUser(user: LoggedInUser) {
+  set loggedInUser(user: AppUser) {
     this._loggedInUser = user;
-  }
-
-  loginWithGoogle() {
-    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-    localStorage.setItem('returnUrl', returnUrl || '/');
-    this.afAuth.auth.signInWithRedirect( new firebase.auth.GoogleAuthProvider())
-      .then(user => {
-
-      });
   }
 
   loginWithEmailPassword(credentials): Promise<any> {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     localStorage.setItem('returnUrl', returnUrl || '/');
     return this.afAuth.auth.signInWithEmailAndPassword(credentials.username, credentials.password);
-  }
+}
 
   logout(): Promise<any> {
     return this.afAuth.auth.signOut()

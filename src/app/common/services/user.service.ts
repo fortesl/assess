@@ -1,43 +1,54 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import * as firebase from 'firebase';
-import { AuthService } from './auth.service';
-import { LoggedInUser } from '../../models/logged-in-user';
+import { AppUser } from '../../models/app-user';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { NewUser } from '../../models/new-user-details';
+import { Subscription } from 'rxjs';
+import { AuthService } from './auth.service';
+import { AssessmentService } from './assessment.service';
 
 @Injectable()
 export class UserService {
 
-  constructor(private db: AngularFireDatabase, private auth: AuthService ) { }
+  constructor(private db: AngularFireDatabase, private auth: AuthService, private assessment: AssessmentService) { }
 
-  private _userDbName = '/users/';
+  private readonly _userDbName = 'users';
+  _subscription: Subscription;
+  assessmentName: string;
 
-  updateUser(user: firebase.User) {
-    const appUser: LoggedInUser = {
-      name: user.displayName || '',
-      email: user.email,
-      roles: ['user']
-    };
-    const clearSub: Subscription = this.get(user.uid)
+  updateAppUser(user: firebase.User) {
+    this._subscription = this.get(user.uid)
     .subscribe(x => {
       if (x) {
-        appUser.roles = x.roles;
-        if (!appUser.name) {
-          appUser.name = x.name;
+        this.auth.loggedInUser = x;
+        if (x.assessments) {
+          this.assessment.connect(x.assessments[0]);
+          this.assessmentName = x.assessments[0];
+        } else if (x.roles.includes('superadmin')) {
+          this.assessment.connect('CUC-101');
+          this.assessmentName = 'CUC-101';          
         }
       }
-      this.auth.setLoggedInUser(appUser);
-      this.db.object(this._userDbName + user.uid).update(appUser);
     });
+
+    setTimeout(() => {
+      if (this._subscription) {
+        this._subscription.unsubscribe(); 
+        this._subscription = undefined;
+      }}, 5000);
+    
   }
 
-  saveNewUser(user: NewUser) {
-    this.db.object(this._userDbName + user.uid).set(user);
+  saveNewUser(uid: string, user: AppUser) {
+    this.db.object(`${this._userDbName}/${uid}`).set(user);
   }
 
-  get(uid: string): Observable<LoggedInUser> {
-    return this.db.object(this._userDbName + uid).valueChanges() as Observable<LoggedInUser>;
+  get(uid: string): Observable<AppUser> {
+    return this.db.object(`${this._userDbName}/${uid}`).valueChanges() as Observable<AppUser>;
   }
+
+  getUsers(assessment: string): Observable<AppUser[]> {
+    return this.db.list(this._userDbName).valueChanges() as Observable<AppUser[]>
+  }
+  
 }

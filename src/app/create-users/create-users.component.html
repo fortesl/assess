@@ -1,52 +1,55 @@
-<div class="header">
-  Create User
-</div>
-<form class="create-user-form" [formGroup]="form" (ngSubmit)="submit(form.value)">
-  <div formGroupName="createUser">
-    <mat-form-field class="email">
-      <mat-icon class="email" matPrefix>email</mat-icon>
-      <input
-        formControlName="email"
-        matInput
-        placeholder="Email Address">
-      <mat-error *ngIf="email.invalid && email.errors['email']">
-        invalid email address
-      </mat-error>
-      <mat-error *ngIf="email.invalid && email.errors['required']">
-          email address is required.
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="name">
-      <input
-        formControlName="name"
-        matInput
-        placeholder="First and Last Name">
-      <mat-error *ngIf="name.invalid && name.errors['minlength']">
-        Name is too short. Please enter {{ name.errors['minlength.requiredLength'] }} or more characters
-      </mat-error>
-      <mat-error *ngIf="name.invalid && name.errors['required']">
-          name address is required.
-      </mat-error>
-    </mat-form-field>
-    <p>Role: </p>
-    <mat-radio-group formControlName="role">
-      <mat-radio-button value="user">User</mat-radio-button>
-      <mat-radio-button value="admin">Administrator</mat-radio-button>
-    </mat-radio-group>
-
+<div class="user-container">
+  <div class="create-form">
+      <div class="header">
+          Create User
+        </div>
+        <form class="create-user-form" [formGroup]="form" (ngSubmit)="submit(form.value)">
+          <div formGroupName="createUser">
+            <mat-form-field class="email">
+              <mat-icon class="email" matPrefix>email</mat-icon>
+              <input
+                formControlName="email"
+                matInput
+                placeholder="Email">
+              <mat-error *ngIf="email.invalid && email.errors['email']">
+                invalid email address
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="name">
+              <input
+                formControlName="name"
+                matInput
+                placeholder="First and Last Name">
+              <mat-error *ngIf="name.invalid && name.errors['minlength']">
+                Invalid name
+              </mat-error>
+            </mat-form-field>
+            <p>Role: </p>
+            <mat-radio-group formControlName="role">
+              <mat-radio-button value="user">User</mat-radio-button>
+              <mat-radio-button value="admin">Administrator</mat-radio-button>
+            </mat-radio-group>
+        
+          </div>
+          <button
+            [disabled]="form.pending || form.untouched || form.invalid"
+            class="submit"
+            mat-raised-button
+            color="primary"
+            type=submit>Create
+          </button>
+          <button
+            routerLink="."
+            (click)="cancel($event)"
+            mat-raised-button
+            class="reset">Cancel
+          </button>
+        </form>
+        <mat-error [ngClass]="{'create-fail': UserFailed, 'create-success': createUserSuccess}">{{ createUserFailed || createUserSuccess }}</mat-error>
+      
   </div>
-  <button
-    [disabled]="form.pending || form.untouched || form.invalid"
-    class="submit"
-    mat-raised-button
-    color="primary"
-    type=submit>Create
-  </button>
-  <button
-    routerLink="."
-    (click)="cancel($event)"
-    mat-raised-button
-    class="reset">Cancel
-  </button>
-</form>
-<mat-error [ngClass]="{'create-fail': UserFailed, 'create-success': createUserSuccess}">{{ createUserFailed || createUserSuccess }}</mat-error>
+  <div class="list-users">
+    <app-list-users></app-list-users>
+  </div>
+  
+</div>

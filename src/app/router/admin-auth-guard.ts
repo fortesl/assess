@@ -15,7 +15,7 @@ export class AdminAuthGuard implements CanActivate {
     return this.auth.isLoggedInUser$
       .switchMap(user => this.userService.get(user.uid))
       .map(user => {
-        const allowed = user.roles.includes('admin');
+        const allowed = user.roles.includes('admin') || user.roles.includes('superadmin');
         if (!allowed) {
           this.router.navigate(['not-authorized']);
         }

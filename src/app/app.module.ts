@@ -17,7 +17,6 @@ import { CreateAssessmentComponent } from './create-assessment/create-assessment
 import { CreateQuestionsComponent } from './create-questions/create-questions.component';
 import { ViewQuestionsComponent } from './view-questions/view-questions.component';
 import { ViewResultsComponent } from './view-results/view-results.component';
-import { CreateAdminsComponent } from './create-admins/create-admins.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -31,7 +30,9 @@ import { SuperAdminAuthGuard } from './router/super-admin-auth-guard';
 import { AppErrorHandler } from './common/error-handling/app-error-handler';
 import { ShopMaterialModule } from './common/shop-material/shop-material.module';
 import { CurrentRouteService } from './common/current-route.service';
-import { MatRadioModule } from '@angular/material/radio';
+import { AssessmentService } from './common/services/assessment.service';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { EditAssessmentComponent } from './edit-assessment/edit-assessment.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MatRadioModule } from '@angular/material/radio';
     CreateQuestionsComponent,
     ViewQuestionsComponent,
     ViewResultsComponent,
-    CreateAdminsComponent
+    ListUsersComponent,
+    EditAssessmentComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,6 @@ import { MatRadioModule } from '@angular/material/radio';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    MatRadioModule,
     RouterModule.forRoot(routes)
 ],
   providers: [
@@ -68,7 +69,8 @@ import { MatRadioModule } from '@angular/material/radio';
     UserService,
     AdminAuthGuard,
     CurrentRouteService,
-    SuperAdminAuthGuard
+    SuperAdminAuthGuard,
+    AssessmentService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,3 +1,29 @@
-<p>
-  home works!
-</p>
+<div class="home-content">
+
+  <ng-template #requestLogin>
+    <div class="request-login">
+      <a [routerLink]="['/login']">Please Login</a>
+    </div>  
+  </ng-template>
+
+  <div class="user-page" *ngIf="auth.loggedInUser.email; else requestLogin">
+
+    <div class="title">
+      {{ getTitle() }}
+    </div>
+
+    <header class="header">
+      {{ getHeader() }}
+    </header>
+
+    <main class="content">
+      {{ getContent() }}
+    </main>
+
+    <footer class="footer">
+      {{ getFooter() }}
+    </footer>
+
+  </div>
+</div>
+

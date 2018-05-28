@@ -1,12 +1,16 @@
-.header {
-  width: 80%;
-  font-weight: 700;
-  font-size: 3rem;
-  margin: 2rem auto 1rem auto;
+.user-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
 }
-.create-user-form {
-  width: 80%;
-  margin: auto;
+.list-users {
+  width: 40%;
+  min-width: 600px;
+}
+.header {
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 2rem auto 1rem auto;
 }
 .email {
   width: 100%;

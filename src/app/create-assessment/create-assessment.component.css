@@ -1,0 +1,29 @@
+.create-assessment {
+    width: 90%;
+    margin: auto;
+}
+.create-assessment > .header {
+    font-weight: 700;
+    font-size: 2rem;
+    margin: auto;
+  }
+.pages-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+}
+.pages-container > * {
+    flex: 1;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.name {
+    width: 30%;
+    margin: auto;
+    text-align: center;
+    margin-top: 2rem;
+}

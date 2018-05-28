@@ -3,6 +3,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../common/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../common/services/user.service';
+import { AssessmentService } from '../common/services/assessment.service';
+import { AppUser } from '../models/app-user';
 
 @Component({
   selector: 'app-create-users',
@@ -11,7 +13,7 @@ import { UserService } from '../common/services/user.service';
 })
 export class CreateUsersComponent implements OnInit {
 
-  constructor(fb: FormBuilder, private auth: AuthService, private router: Router, private db: UserService) {
+  constructor(fb: FormBuilder, private auth: AuthService, private router: Router, private db: UserService, private assessment: AssessmentService) {
     this.form = fb.group({
       createUser: fb.group({
         email: ['', [
@@ -26,7 +28,6 @@ export class CreateUsersComponent implements OnInit {
   form: FormGroup;
   createUserFailed = '';
   createUserSuccess = '';
-  private readonly assessment = 'CUC-100';
 
   ngOnInit() {
   }
@@ -39,17 +40,28 @@ export class CreateUsersComponent implements OnInit {
     return this.form.get('createUser.name');
   }
 
+  get role() {
+    return this.form.get('createUser.role');
+  }
+
   submit(value) {
     this.createUserFailed = '';
-    const {name, email, role } = value.createUser;
-    const names = name.split(' ');
-    const password = `1${names[0]}9`;
+    const createdUser = value.createUser;
+    const password = `11${createdUser.name.split(' ')[0]}99`.toLowerCase();
+    const appUser: AppUser = {
+      name: createdUser.name,
+      email: createdUser.email,
+      roles: [createdUser.role],
+      assessments: ['CUC-101']
+    }
 
-    this.auth.createUser({email: email, password: password})
+    this.auth.createUser({email: createdUser.email, password: password})
       .then(user => {
-        this.db.saveNewUser({ uid: user.uid, name: name, email: email, roles: role });
+        this.db.saveNewUser(user.uid, appUser);
         this.createUserSuccess = `${value.createUser.name} created with initial password: ${password}`;
-        this.form.reset();
+        this.name.reset();
+        this.role.setValue('user');
+        this.email.reset();
         this.form.markAsPristine();
         this.form.markAsUntouched();
         user.updateProfile({
