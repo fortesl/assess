@@ -11,6 +11,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatSortModule,
     MatSelectModule,
     MatRadioModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -39,7 +41,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatSortModule,
     MatSelectModule,
     MatRadioModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
 })
 export class ShopMaterialModule { }

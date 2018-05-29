@@ -15,11 +15,12 @@ import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 import { EditAssessmentComponent } from '../edit-assessment/edit-assessment.component';
 
 export const routes: Route[] = [
+  { path: ':userType',  component: HomeComponent},
   { path: '',  component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent},
   { path: 'assess', component: AssessComponent, canActivate: [AuthGuard] },
-  { path: 'admin/assessment/edit', component: EditAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/assessment/edit/:userType', component: EditAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/questions/create', component: CreateQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'questions/view', component: ViewQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/results', component: ViewResultsComponent, canActivate: [AuthGuard, AdminAuthGuard] },

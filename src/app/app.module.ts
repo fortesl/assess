@@ -72,6 +72,8 @@ import { EditAssessmentComponent } from './edit-assessment/edit-assessment.compo
     SuperAdminAuthGuard,
     AssessmentService
   ],
+  entryComponents: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

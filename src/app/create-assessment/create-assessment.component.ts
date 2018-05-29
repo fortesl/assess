@@ -67,7 +67,7 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
         value.userPage[key] = 'blank';
       }
     }
-    this.assessment.create(value)
+    this.assessment.create(value.name, value)
       .then(() => this.router.navigate(['/']))
       .catch(error => this.submitMessage = error.message);
   }

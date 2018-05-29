@@ -9,19 +9,19 @@
   <div class="user-page" *ngIf="auth.loggedInUser.email; else requestLogin">
 
     <div class="title">
-      {{ getTitle() }}
+      {{ getSection('title') }}
     </div>
 
     <header class="header">
-      {{ getHeader() }}
+      {{ getSection('header') }}
     </header>
 
     <main class="content">
-      {{ getContent() }}
+      {{ getSection('content') }}
     </main>
 
     <footer class="footer">
-      {{ getFooter() }}
+      {{ getSection('footer') }}
     </footer>
 
   </div>

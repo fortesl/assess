@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AuthService } from '../common/services/auth.service';
 import { AppUser } from '../models/app-user';
 import { AssessmentService } from '../common/services/assessment.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,35 +11,21 @@ import { AssessmentService } from '../common/services/assessment.service';
 })
 export class HomeComponent {
 
-  constructor(public auth: AuthService, private assessment: AssessmentService) { 
+  constructor(public auth: AuthService, private assessment: AssessmentService, route: ActivatedRoute) { 
+    this.page = route.snapshot.paramMap.get('userType');
   }
+  page = '';
 
-  getTitle(): string {
+  getSection(section: string): string {
+    let value: string;
     if (this.assessment.current) {
-      return this.auth.loggedInUser.roles.includes('admin') ? this.assessment.current.adminPage.title : this.assessment.current.userPage.title;
+      if (!this.page) {
+        value = this.auth.loggedInUser.roles.includes('admin') ? this.assessment.current.adminPage[section] : this.assessment.current.userPage['section'];
+      } else {
+        value = this.page === 'admin' ? this.assessment.current.adminPage[section] : this.assessment.current.userPage[section];
+      }
     }
-    return '';
-  }
-
-  getHeader(): string {
-    if (this.assessment.current) {
-      return this.auth.loggedInUser.roles.includes('admin') ? this.assessment.current.adminPage.header : this.assessment.current.userPage.header;
-    }
-    return '';
-  }
-
-  getContent(): string {
-    if (this.assessment.current) {
-      return this.auth.loggedInUser.roles.includes('admin') ? this.assessment.current.adminPage.content : this.assessment.current.userPage.content;
-    }
-    return '';
-  }
-
-  getFooter(): string {
-    if (this.assessment.current) {
-      return this.auth.loggedInUser.roles.includes('admin') ? this.assessment.current.adminPage.footer : this.assessment.current.userPage.footer;
-    }
-    return '';
+    return value && value !== 'blank' ? value : '';
   }
 
 }

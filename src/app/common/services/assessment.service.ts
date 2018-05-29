@@ -18,8 +18,7 @@ export class AssessmentService {
     return this.db.object(`${this._dbName}/${name}`).valueChanges();
   }
 
-  create(assessment: any): Promise<any> {
-    const { name } = assessment;
+  create(name: string, assessment: any): Promise<any> {
     delete assessment.name;
     return this.db.object(`${this._dbName}/${name}`).update(assessment);
   }

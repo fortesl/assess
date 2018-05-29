@@ -29,8 +29,8 @@ export class NavigationBarComponent {
     label: 'UserName',
     icon: 'person',
     items: [
-      { label: 'Modify Admin Page', path: ['/admin/assessment/edit'], roles: ['admin'] },
-      { label: 'Modify User Page', path: ['/admin/assessment/edit'], roles: ['admin'] },
+      { label: 'Modify Admin Page', path: ['/admin/assessment/edit', 'admin'], roles: ['admin'] },
+      { label: 'Modify User Page', path: ['/admin/assessment/edit', 'user'], roles: ['admin'] },
       { label: 'Create Users', path: ['/admin/users/create'], roles: ['admin'] },
       { label: 'Create Assessment', path: ['/superadmin/assessment/create'], roles: ['superadmin'] },
       { label: 'Create Questions', path: ['/admin/questions/create'], roles: ['admin'] },
