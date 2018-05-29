@@ -15,7 +15,6 @@ import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 import { EditAssessmentComponent } from '../edit-assessment/edit-assessment.component';
 
 export const routes: Route[] = [
-  { path: ':userType',  component: HomeComponent},
   { path: '',  component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent},

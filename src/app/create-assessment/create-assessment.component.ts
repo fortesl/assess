@@ -15,16 +15,16 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
     this.form = fb.group({
       name: ['CUC-101', Validators.required],
       adminPage: fb.group({
-        title: [''],
-        header: [''],
-        content: [''],
-        footer: ['']
+        title: [],
+        header: [],
+        content: [],
+        footer: []
       }),
       userPage: fb.group({
-        title: [''],
-        header: [''],
-        content: [''],
-        footer: ['']
+        title: [],
+        header: [],
+        content: [],
+        footer: []
       })
     });
   }

@@ -33,6 +33,7 @@ import { CurrentRouteService } from './common/current-route.service';
 import { AssessmentService } from './common/services/assessment.service';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { EditAssessmentComponent } from './edit-assessment/edit-assessment.component';
+import { QuestionService } from './common/services/question.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { EditAssessmentComponent } from './edit-assessment/edit-assessment.compo
     AdminAuthGuard,
     CurrentRouteService,
     SuperAdminAuthGuard,
-    AssessmentService
+    AssessmentService,
+    QuestionService
   ],
   entryComponents: [
   ],
