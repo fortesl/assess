@@ -34,6 +34,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
 import { EditAssessmentComponent } from './edit-assessment/edit-assessment.component';
 import { QuestionService } from './common/services/question.service';
 import { AssessmentComponent } from './assessment/assessment.component';
+import { ListQuestionsComponent } from './list-questions/list-questions.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AssessmentComponent } from './assessment/assessment.component';
     ViewResultsComponent,
     ListUsersComponent,
     EditAssessmentComponent,
-    AssessmentComponent
+    AssessmentComponent,
+    ListQuestionsComponent
   ],
   imports: [
     BrowserModule,

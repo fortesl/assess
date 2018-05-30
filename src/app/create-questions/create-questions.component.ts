@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from '../common/services/question.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../common/services/auth.service';
 
 @Component({
   selector: 'app-create-questions',
@@ -13,7 +14,7 @@ import { Subscription } from 'rxjs';
 export class CreateQuestionsComponent implements AfterViewInit {
 
   constructor(fb: FormBuilder, private router: Router,
-    private assessment: AssessmentService, private question: QuestionService, private cdr: ChangeDetectorRef, private route: ActivatedRoute) {
+    private assessment: AssessmentService, private question: QuestionService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private auth: AuthService) {
     this.form = fb.group({
       metadata: fb.group({
         assessmentName: [],
@@ -47,6 +48,7 @@ export class CreateQuestionsComponent implements AfterViewInit {
   }
 
   _subscription: Subscription;
+  createError: boolean;
 
   form: FormGroup;
   submitMessage: string;
@@ -100,10 +102,7 @@ export class CreateQuestionsComponent implements AfterViewInit {
   ];
   page: string;
 
-  trueFalseOptions = [
-    { selected: false, name: 'True'},
-    { selected: false, name: 'False'}
-  ]
+  private _numberOfMcOptions = 7;
 
   ngAfterViewInit() {
     this.assessmentName.setValue(this.assessment.currentName);
@@ -116,6 +115,7 @@ export class CreateQuestionsComponent implements AfterViewInit {
     this._subscription = this.route.paramMap
     .subscribe(x => {
       this.page = x.get('page');
+      this.createError = false;
       this.cdr.detectChanges();
     });
     this.cdr.detectChanges();
@@ -149,26 +149,48 @@ export class CreateQuestionsComponent implements AfterViewInit {
   get type() {
     return this.form.get('type');
   }
-  get mcOption1() {
+  get mcOption1Val() {
     return this.form.get('mcOption1Val');
   }
-  get mcOption2() {
+  get mcOption2Val() {
     return this.form.get('mcOption2Val');
   }
-  get mcOption3() {
+  get mcOption3Val() {
     return this.form.get('mcOption3Val');    
   }
-  get mcOption4() {
+  get mcOption4Val() {
     return this.form.get('mcOption4Val');    
   }
-  get mcOption5() {
+  get mcOption5Val() {
     return this.form.get('mcOption5Val');    
   }
-  get mcOption6() {
+  get mcOption6Val() {
     return this.form.get('mcOption6Val');    
   }
-  get mcOption7() {
+  get mcOption7Val() {
     return this.form.get('mcOption7Val');    
+  }
+
+  get mcOption1() {
+    return this.form.get('mcOption1');
+  }
+  get mcOption2() {
+    return this.form.get('mcOption2');
+  }
+  get mcOption3() {
+    return this.form.get('mcOption3');    
+  }
+  get mcOption4() {
+    return this.form.get('mcOption4');    
+  }
+  get mcOption5() {
+    return this.form.get('mcOption5');    
+  }
+  get mcOption6() {
+    return this.form.get('mcOption6');    
+  }
+  get mcOption7() {
+    return this.form.get('mcOption');    
   }
   get solution() {
     return this.form.get('solution');
@@ -183,35 +205,51 @@ export class CreateQuestionsComponent implements AfterViewInit {
     let disable: boolean;
 
     if (this.type.value === 'True/False') {
-      disable = this.mcOption1.value || this.mcOption2.value ? false : true;
+      disable = (this.mcOption1Val.value && !this.mcOption2Val.value) || (this.mcOption2Val.value && !this.mcOption1Val.value) ? false : true;
     } else if (this.type.value === 'MC') {
-      disable = this.mcOption1.value || this.mcOption2.value || this.mcOption3.value || this.mcOption5.value || this.mcOption5.value || this.mcOption6.value || this.mcOption7.value ? false : true;
+      disable = this.mcOption1Val.value || this.mcOption2Val.value || this.mcOption3Val.value || this.mcOption4Val.value || this.mcOption5Val.value || this.mcOption5Val.value || this.mcOption6Val.value || this.mcOption7Val.value ? false : true;
     } else {
       disable = this.solution.value ? false : true;
     }
     return disable;
   }
+
+  resetMultipleChoiceOptions() {
+    for (let i=0; i< this._numberOfMcOptions; i++) {
+      const option = `mcOption${i+1}`;
+      const optionVal = `mcOption${i+1}Val`;
+      this.form.get(option).setValue(null);
+      this.form.get(optionVal).setValue(false);
+    }
+  }
   submit(value) {
     this.submitMessage = 'Question Created';
-    // this.question.create(value)
-    //   .then((x) => {
-    //     this.form.get('description').reset();
-    //     this.form.get('explanation').reset();
-    //     this.form.get('description').reset();
-    //   })
-    //   .catch(error => this.submitMessage = error.message);
-    if (this.type.value === 'True/False') {
-      this.form.get('mcOption1').setValue('True');
-      this.form.get('mcOption2').setValue('False');
+
+    for (let i=0; i< this._numberOfMcOptions; i++) {
+      const option = `mcOption${i+1}`;
+      const optionVal = `mcOption${i+1}Val`;
+
+      if (value.type === 'True/False') {
+        if (!i) value[option] = 'True';
+        else if (i === 1) value[option] = 'False';
+      }
+
+      if (!value[option]) {
+        value[optionVal] = null;
+      }
     }
-    for (let i=0; i<7; i++) {
-        const option = `mcOption${i+1}`;
-        const optionVal = `mcOption${i+1}`;
-        if (!this.form.get(option).value) {
-          this.form.get(optionVal).setValue(null);
-        }
-    }
-    this.submitMessage = 'Question Created';
+
+    value.createdBy = this.auth.loggedInUser.email;
+
+    this.question.create(value)
+      .then((x) => {
+        this.form.get('description').reset();
+        this.form.get('explanation').reset();
+        this.form.get('description').reset();
+        this.resetMultipleChoiceOptions();
+      })
+      .catch(error => this.submitMessage = error.message);
+
   }
 
   cancel() {

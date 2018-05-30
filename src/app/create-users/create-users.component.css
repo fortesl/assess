@@ -21,15 +21,7 @@
 .submit {
   margin-top: 1rem;
 }
-.create-fail {
-  text-align: center;
-  margin-top: 0.5rem;
-}
-.create-success {
-  text-align: center;
-  margin-top: 0.5rem;
-  color: green;
-}
+
 .mat-icon.email {
   color: rgb(80, 57, 143);
   margin-right: 0.5rem;

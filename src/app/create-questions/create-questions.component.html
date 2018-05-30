@@ -14,7 +14,7 @@
 
       <div class="dropdowns">
         <mat-form-field>
-          <mat-select placeholder="Question Type" formControlName="type">
+          <mat-select placeholder="Question Type" formControlName="type" (change)="resetMultipleChoiceOptions()">
             <mat-option *ngFor="let type of questionTypes" [value]="type.value">
               {{type.name}}
             </mat-option>
@@ -97,6 +97,7 @@
         <button routerLink="." (click)="cancel($event)" mat-raised-button class="reset">Back
         </button>
       </div>
+      <mat-error [ngClass]="{'create-fail': createError, 'create-success': !createError}">{{ submitMessage }}</mat-error>
 
     </div>
 

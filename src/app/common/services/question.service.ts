@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import uuid from 'uuid';
 
 @Injectable()
 export class QuestionService {
@@ -14,7 +13,7 @@ export class QuestionService {
   }
 
   create(question: any): Promise<any> {
-    const id = uuid();
+    const id = new Date().getTime() + '_'  + question.createdBy.substring(0, 3);
     return this.db.object(`${this._dbName}/${id}`).set(question);
   }
 }
