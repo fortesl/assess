@@ -12,6 +12,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSelectModule,
     MatRadioModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
   ],
   exports: [
     MatButtonModule,
@@ -42,7 +44,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSelectModule,
     MatRadioModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
   ],
 })
 export class ShopMaterialModule { }

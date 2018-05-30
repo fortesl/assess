@@ -1,0 +1,57 @@
+.create-question {
+  width: 90%;
+  margin: auto;
+}
+
+.header {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+.metadata {
+  width: fit-content;
+  white-space: nowrap;
+  margin: auto;
+  border: 1px solid lightgray;
+  border-style: groove;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.metadata > div {
+  flex: 1;
+}
+.metadata .left {
+  margin-right: 2rem;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.areas {
+  width: 75%;
+  padding: 2rem 0;
+}
+.dropdown {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+.dropdown > * {
+  flex: 1;
+  width: 25%;
+  margin-right: 2rem;
+  margin-top: 1rem;
+}
+
+.description {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+mat-radio-button, mat-checkbox {
+  display: block;
+}

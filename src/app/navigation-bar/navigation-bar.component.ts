@@ -33,7 +33,7 @@ export class NavigationBarComponent {
       { label: 'Modify User Page', path: ['/admin/assessment/edit', 'user'], roles: ['admin'] },
       { label: 'Create Users', path: ['/admin/users/create'], roles: ['admin'] },
       { label: 'Create Assessment', path: ['/superadmin/assessment/create'], roles: ['superadmin'] },
-      { label: 'Create Questions', path: ['/admin/questions/create'], roles: ['admin'] },
+      { label: 'Create Questions', path: ['/admin/questions/create', 'first'], roles: ['admin'] },
       { label: 'View Questions', path: ['/admin/questions/view'], roles: ['admin'] },
       { label: 'View Results', path: ['/admin/results'], roles: ['admin'] },
       { label: 'Logout', path: ['/'] }
