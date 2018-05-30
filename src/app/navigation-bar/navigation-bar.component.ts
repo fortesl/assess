@@ -21,21 +21,27 @@ export class NavigationBarComponent {
 
   userMenuSelection: NavItem;
 
-  navLinks = [
-    { label: 'Home', path: ['/'], icon: 'home' },
+  navLinks: NavItem[] = [
+    { label: 'Home', path: ['/'], icon: 'home' }
   ];
+
+  navAdminDropdown: NavItem = { 
+    label: 'Assessment', roles: ['admin'], items: [
+      { label: 'Assessment', path: ['/admin/assessment'], roles: ['admin'] },
+      { label: 'Users', path: ['/admin/users/create'], roles: ['admin'] },
+      { label: 'Admin Page', path: ['/admin/assessment', 'admin'], roles: ['admin'] },
+      { label: 'User Page', path: ['/admin/assessment', 'user'], roles: ['admin'] },
+      { label: 'Create Assessment', path: ['/superadmin/assessment/create'], roles: ['superadmin'] },
+      { label: 'Questions', path: ['/admin/questions/create', 'first'], roles: ['admin'] },
+      { label: 'View Questions', path: ['/admin/questions/view'], roles: ['admin'] },
+      { label: 'Results', path: ['/admin/results'], roles: ['admin'] }        
+      ]
+    };
 
   loggedInUserMenu: NavItem = {
     label: 'UserName',
     icon: 'person',
     items: [
-      { label: 'Modify Admin Page', path: ['/admin/assessment/edit', 'admin'], roles: ['admin'] },
-      { label: 'Modify User Page', path: ['/admin/assessment/edit', 'user'], roles: ['admin'] },
-      { label: 'Create Users', path: ['/admin/users/create'], roles: ['admin'] },
-      { label: 'Create Assessment', path: ['/superadmin/assessment/create'], roles: ['superadmin'] },
-      { label: 'Create Questions', path: ['/admin/questions/create', 'first'], roles: ['admin'] },
-      { label: 'View Questions', path: ['/admin/questions/view'], roles: ['admin'] },
-      { label: 'View Results', path: ['/admin/results'], roles: ['admin'] },
       { label: 'Logout', path: ['/'] }
     ]
   };

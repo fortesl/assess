@@ -1,57 +1,47 @@
-.create-question {
+.create-content {
   width: 90%;
   margin: auto;
 }
 
 .header {
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin: 1rem 0;
-}
-.metadata {
-  width: fit-content;
-  white-space: nowrap;
-  margin: auto;
-  border: 1px solid lightgray;
-  border-style: groove;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
-.metadata > div {
-  flex: 1;
-}
-.metadata .left {
-  margin-right: 2rem;
-}
-
-.label {
-  font-weight: 700;
 }
 
 .areas {
-  width: 75%;
+  width: 90%;
   padding: 2rem 0;
 }
-.dropdown {
+.dropdowns {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: 90%
 }
-.dropdown > * {
+.dropdowns > * {
   flex: 1;
-  width: 25%;
-  margin-right: 2rem;
-  margin-top: 1rem;
+  width: 333.3%;
+  padding-right: 2rem;
 }
 
-.description {
-  width: 100%;
-  padding: 2rem 0;
+.description, .explanation {
+  width: 90%;
+  padding: 1rem 0;
 }
 
-mat-radio-button, mat-checkbox {
+.mat-radio-button, .mat-checkbox {
   display: block;
+  margin-bottom: 0.3rem;
+}
+.mat-radio-button-label, .mat-checkbox-label {
+  padding-left: 0.2rem;
+}
+
+.buttons {
+  padding-top: 2rem;
+}
+
+.show-description {
+  padding-bottom: 2rem;
 }

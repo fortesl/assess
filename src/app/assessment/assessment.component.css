@@ -1,0 +1,37 @@
+.assessment-container {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+}
+
+.header {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.metadata {
+  width: fit-content;
+  white-space: nowrap;
+  margin: auto;
+  border: 1px solid lightgray;
+  border-style: groove;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.metadata>div {
+  flex: 1;
+}
+
+.metadata .left {
+  margin-right: 2rem;
+}
+
+.label {
+  font-weight: 700;
+}
+

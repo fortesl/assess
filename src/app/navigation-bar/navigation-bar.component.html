@@ -7,6 +7,12 @@
     <span *ngIf="!link.icon">{{ link.label }}</span>
     <mat-icon [title]="link.label" *ngIf="link.icon">{{ link.icon }}</mat-icon>
   </a>
+
+  <a mat-tab-link [ngClass]="{hide: !isAuthorized(navAdminDropdown.roles)}" [matMenuTriggerFor]="adminDropdown">
+      <span *ngIf="!navAdminDropdown.icon">{{ navAdminDropdown.label }}</span>
+      <mat-icon [title]="navAdminDropdown.label" *ngIf="navAdminDropdown.icon">{{ link.icon }}</mat-icon>      
+  </a>
+
   <ng-template #anonymousUser>
     <button
       (click)="login()"
@@ -28,12 +34,23 @@
   </button>
 </nav>
 
-<mat-menu #menu="matMenu" [overlapTrigger]="false">
+<mat-menu #adminDropdown="matMenu" [overlapTrigger]="false">
   <button
-    *ngFor="let item of loggedInUserMenu.items"
+    *ngFor="let item of navAdminDropdown.items"
     [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
     (click)="onUserMenuClick(item)"
     mat-menu-item>
       {{ item.label }}
     </button>
 </mat-menu>
+
+<mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <button
+      *ngFor="let item of loggedInUserMenu.items"
+      [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
+      (click)="onUserMenuClick(item)"
+      mat-menu-item>
+        {{ item.label }}
+      </button>
+  </mat-menu>
+

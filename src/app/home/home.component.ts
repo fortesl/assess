@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class HomeComponent {
 
   constructor(public auth: AuthService, private assessment: AssessmentService, route: ActivatedRoute) { 
-    this.page = route.snapshot.paramMap.get('userType');
+    this.page = route.snapshot.paramMap.get('page');
   }
   page = '';
 

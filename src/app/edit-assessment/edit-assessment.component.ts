@@ -28,7 +28,7 @@ export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this._subscription = this.route.paramMap
     .subscribe(x => {
-      this.page = x.get('userType');
+      this.page = x.get('page');
       this.form.setValue(Object.assign(this.form.value, this.page === 'admin' ? this.assessment.current.adminPage : this.assessment.current.userPage));
       this.cdr.detectChanges();
     });

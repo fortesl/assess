@@ -11,7 +11,6 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './router/routes';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { AssessComponent } from './assess/assess.component';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { CreateAssessmentComponent } from './create-assessment/create-assessment.component';
 import { CreateQuestionsComponent } from './create-questions/create-questions.component';
@@ -34,6 +33,7 @@ import { AssessmentService } from './common/services/assessment.service';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { EditAssessmentComponent } from './edit-assessment/edit-assessment.component';
 import { QuestionService } from './common/services/question.service';
+import { AssessmentComponent } from './assessment/assessment.component';
 
 @NgModule({
   declarations: [
@@ -43,14 +43,14 @@ import { QuestionService } from './common/services/question.service';
     NotFoundComponent,
     LoginComponent,
     NavigationBarComponent,
-    AssessComponent,
     CreateUsersComponent,
     CreateAssessmentComponent,
     CreateQuestionsComponent,
     ViewQuestionsComponent,
     ViewResultsComponent,
     ListUsersComponent,
-    EditAssessmentComponent
+    EditAssessmentComponent,
+    AssessmentComponent
   ],
   imports: [
     BrowserModule,
