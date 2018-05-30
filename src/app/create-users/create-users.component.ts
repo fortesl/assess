@@ -13,7 +13,8 @@ import { AppUser } from '../models/app-user';
 })
 export class CreateUsersComponent implements OnInit {
 
-  constructor(fb: FormBuilder, private auth: AuthService, private router: Router, private db: UserService, private assessment: AssessmentService) {
+  constructor(fb: FormBuilder, private auth: AuthService, private router: Router,
+    private db: UserService, private assessment: AssessmentService) {
     this.form = fb.group({
       createUser: fb.group({
         email: ['', [
@@ -53,7 +54,7 @@ export class CreateUsersComponent implements OnInit {
       email: createdUser.email,
       roles: [createdUser.role],
       assessments: ['CUC-101']
-    }
+    };
 
     this.auth.createUser({email: createdUser.email, password: password})
       .then(user => {

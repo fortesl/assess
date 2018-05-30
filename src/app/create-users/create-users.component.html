@@ -29,7 +29,7 @@
               <mat-radio-button value="user">User</mat-radio-button>
               <mat-radio-button value="admin">Administrator</mat-radio-button>
             </mat-radio-group>
-        
+
           </div>
           <button
             [disabled]="form.pending || form.untouched || form.invalid"
@@ -45,11 +45,11 @@
             class="reset">Cancel
           </button>
         </form>
-        <mat-error [ngClass]="{'create-fail': UserFailed, 'create-success': createUserSuccess}">{{ createUserFailed || createUserSuccess }}</mat-error>
-      
+        <mat-error [ngClass]="{'create-fail': createUserFailed, 'create-success': createUserSuccess}">{{ createUserFailed || createUserSuccess }}</mat-error>
+
   </div>
   <div class="list-users">
     <app-list-users></app-list-users>
   </div>
-  
+
 </div>

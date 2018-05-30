@@ -8,7 +8,6 @@ import { AdminAuthGuard } from './admin-auth-guard';
 import { CreateUsersComponent } from '../create-users/create-users.component';
 import { CreateAssessmentComponent } from '../create-assessment/create-assessment.component';
 import { CreateQuestionsComponent } from '../create-questions/create-questions.component';
-import { ViewQuestionsComponent } from '../view-questions/view-questions.component';
 import { ViewResultsComponent } from '../view-results/view-results.component';
 import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 import { EditAssessmentComponent } from '../edit-assessment/edit-assessment.component';
@@ -21,7 +20,6 @@ export const routes: Route[] = [
   { path: 'admin/assessment/:page', component: EditAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/assessment', component: AssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/questions/create/:page', component: CreateQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-  { path: 'questions/view', component: ViewQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/results', component: ViewResultsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/users/create', component: CreateUsersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'superadmin/assessment/create', component: CreateAssessmentComponent, canActivate: [AuthGuard, SuperAdminAuthGuard] },

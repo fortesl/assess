@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnDestroy } from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../common/services/user.service';
 import { AssessmentService } from '../common/services/assessment.service';
 import { AppUser } from '../models/app-user';
@@ -21,11 +21,11 @@ export class ListUsersComponent implements OnDestroy {
 
   constructor(db: UserService, assessment: AssessmentService) {
     this._subscripton = db.getUsers('CUC-101')
-      .subscribe(users => { 
+      .subscribe(users => {
         this.dataSource = new MatTableDataSource(users);
         this.users = users;
         this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;          
+        this.dataSource.sort = this.sort;
       });
   }
 

@@ -1,0 +1,15 @@
+.mat-form-field {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+  width: 100%;
+}
+
+.mat-row:hover {
+  background-color: rgba(197,202,233,.3);
+  cursor: pointer;
+}

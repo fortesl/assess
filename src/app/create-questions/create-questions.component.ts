@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AssessmentService } from '../common/services/assessment.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from '../common/services/question.service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from '../common/services/auth.service';
 
 @Component({
@@ -11,10 +11,11 @@ import { AuthService } from '../common/services/auth.service';
   templateUrl: './create-questions.component.html',
   styleUrls: ['./create-questions.component.css']
 })
-export class CreateQuestionsComponent implements AfterViewInit {
+export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
 
   constructor(fb: FormBuilder, private router: Router,
-    private assessment: AssessmentService, private question: QuestionService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private auth: AuthService) {
+    private assessment: AssessmentService, private question: QuestionService, private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute, private auth: AuthService) {
     this.form = fb.group({
       metadata: fb.group({
         assessmentName: [],
@@ -120,7 +121,7 @@ export class CreateQuestionsComponent implements AfterViewInit {
     });
     this.cdr.detectChanges();
   }
-    
+
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
@@ -156,19 +157,19 @@ export class CreateQuestionsComponent implements AfterViewInit {
     return this.form.get('mcOption2Val');
   }
   get mcOption3Val() {
-    return this.form.get('mcOption3Val');    
+    return this.form.get('mcOption3Val');
   }
   get mcOption4Val() {
-    return this.form.get('mcOption4Val');    
+    return this.form.get('mcOption4Val');
   }
   get mcOption5Val() {
-    return this.form.get('mcOption5Val');    
+    return this.form.get('mcOption5Val');
   }
   get mcOption6Val() {
-    return this.form.get('mcOption6Val');    
+    return this.form.get('mcOption6Val');
   }
   get mcOption7Val() {
-    return this.form.get('mcOption7Val');    
+    return this.form.get('mcOption7Val');
   }
 
   get mcOption1() {
@@ -178,19 +179,19 @@ export class CreateQuestionsComponent implements AfterViewInit {
     return this.form.get('mcOption2');
   }
   get mcOption3() {
-    return this.form.get('mcOption3');    
+    return this.form.get('mcOption3');
   }
   get mcOption4() {
-    return this.form.get('mcOption4');    
+    return this.form.get('mcOption4');
   }
   get mcOption5() {
-    return this.form.get('mcOption5');    
+    return this.form.get('mcOption5');
   }
   get mcOption6() {
-    return this.form.get('mcOption6');    
+    return this.form.get('mcOption6');
   }
   get mcOption7() {
-    return this.form.get('mcOption');    
+    return this.form.get('mcOption');
   }
   get solution() {
     return this.form.get('solution');
@@ -198,16 +199,23 @@ export class CreateQuestionsComponent implements AfterViewInit {
 
   togglePage() {
     event.preventDefault();
-    this.page === 'first' ? this.router.navigate(['/admin/questions/create', 'last']) : this.router.navigate(['/admin/questions/create', 'first']);
+    this.page === 'first'
+      ? this.router.navigate(['/admin/questions/create', 'last'])
+      : this.router.navigate(['/admin/questions/create', 'first']);
   }
 
   disableSubmit(): boolean {
     let disable: boolean;
 
     if (this.type.value === 'True/False') {
-      disable = (this.mcOption1Val.value && !this.mcOption2Val.value) || (this.mcOption2Val.value && !this.mcOption1Val.value) ? false : true;
+      disable = (this.mcOption1Val.value && !this.mcOption2Val.value) || (this.mcOption2Val.value && !this.mcOption1Val.value)
+       ? false
+       : true;
     } else if (this.type.value === 'MC') {
-      disable = this.mcOption1Val.value || this.mcOption2Val.value || this.mcOption3Val.value || this.mcOption4Val.value || this.mcOption5Val.value || this.mcOption5Val.value || this.mcOption6Val.value || this.mcOption7Val.value ? false : true;
+      disable = this.mcOption1Val.value || this.mcOption2Val.value || this.mcOption3Val.value ||
+        this.mcOption4Val.value || this.mcOption5Val.value || this.mcOption5Val.value || this.mcOption6Val.value || this.mcOption7Val.value
+       ? false
+       : true;
     } else {
       disable = this.solution.value ? false : true;
     }
@@ -215,9 +223,9 @@ export class CreateQuestionsComponent implements AfterViewInit {
   }
 
   resetMultipleChoiceOptions() {
-    for (let i=0; i< this._numberOfMcOptions; i++) {
-      const option = `mcOption${i+1}`;
-      const optionVal = `mcOption${i+1}Val`;
+    for (let i = 0; i < this._numberOfMcOptions; i++) {
+      const option = `mcOption${i + 1}`;
+      const optionVal = `mcOption${i + 1}Val`;
       this.form.get(option).setValue(null);
       this.form.get(optionVal).setValue(false);
     }
@@ -225,13 +233,12 @@ export class CreateQuestionsComponent implements AfterViewInit {
   submit(value) {
     this.submitMessage = 'Question Created';
 
-    for (let i=0; i< this._numberOfMcOptions; i++) {
-      const option = `mcOption${i+1}`;
-      const optionVal = `mcOption${i+1}Val`;
+    for (let i = 0; i < this._numberOfMcOptions; i++) {
+      const option = `mcOption${i + 1}`;
+      const optionVal = `mcOption${i + 1}Val`;
 
       if (value.type === 'True/False') {
-        if (!i) value[option] = 'True';
-        else if (i === 1) value[option] = 'False';
+        if (!i) { value[option] = 'True'; } else if (i === 1) { value[option] = 'False'; }
       }
 
       if (!value[option]) {

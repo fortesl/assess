@@ -8,8 +8,8 @@ import { Observable } from 'rxjs/Observable';
 export class AssessmentService {
 
   constructor(private db: AngularFireDatabase) { }
-  
-  private readonly _dbName = 'assessment'
+
+  private readonly _dbName = 'assessment';
   current;
   currentName: string;
 

@@ -25,7 +25,7 @@ export class NavigationBarComponent {
     { label: 'Home', path: ['/'], icon: 'home' }
   ];
 
-  navAdminDropdown: NavItem = { 
+  navAdminDropdown: NavItem = {
     label: 'Assessment', roles: ['admin'], items: [
       { label: 'Assessment', path: ['/admin/assessment'], roles: ['admin'] },
       { label: 'Users', path: ['/admin/users/create'], roles: ['admin'] },
@@ -33,8 +33,7 @@ export class NavigationBarComponent {
       { label: 'User Page', path: ['/admin/assessment', 'user'], roles: ['admin'] },
       { label: 'Create Assessment', path: ['/superadmin/assessment/create'], roles: ['superadmin'] },
       { label: 'Questions', path: ['/admin/questions/create', 'first'], roles: ['admin'] },
-      { label: 'View Questions', path: ['/admin/questions/view'], roles: ['admin'] },
-      { label: 'Results', path: ['/admin/results'], roles: ['admin'] }        
+      { label: 'Results', path: ['/admin/results'], roles: ['admin'] }
       ]
     };
 

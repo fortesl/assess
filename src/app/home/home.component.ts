@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent {
 
-  constructor(public auth: AuthService, private assessment: AssessmentService, route: ActivatedRoute) { 
+  constructor(public auth: AuthService, private assessment: AssessmentService, route: ActivatedRoute) {
     this.page = route.snapshot.paramMap.get('page');
   }
   page = '';
@@ -20,7 +20,9 @@ export class HomeComponent {
     let value: string;
     if (this.assessment.current) {
       if (!this.page) {
-        value = this.auth.loggedInUser.roles.includes('admin') ? this.assessment.current.adminPage[section] : this.assessment.current.userPage['section'];
+        value = this.auth.loggedInUser.roles.includes('admin')
+          ? this.assessment.current.adminPage[section]
+          : this.assessment.current.userPage['section'];
       } else {
         value = this.page === 'admin' ? this.assessment.current.adminPage[section] : this.assessment.current.userPage[section];
       }

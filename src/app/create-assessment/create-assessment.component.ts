@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../common/services/assessment.service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-create-assessment',
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class CreateAssessmentComponent implements OnInit, OnDestroy {
 
-  constructor(fb: FormBuilder, private router: Router, private assessment: AssessmentService) { 
+  constructor(fb: FormBuilder, private router: Router, private assessment: AssessmentService) {
     this.form = fb.group({
       name: ['CUC-101', Validators.required],
       adminPage: fb.group({
@@ -57,12 +57,12 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
   submit(value) {
     this._subscription.unsubscribe();
     this.submitMessage = 'Created Assessment ' + value.name;
-    for (let key in value.adminPage) {
+    for (const key in value.adminPage) {
       if (!value.adminPage[key]) {
         value.adminPage[key] = 'blank';
       }
     }
-    for (let key in value.userPage) {
+    for (const key in value.userPage) {
       if (!value.userPage[key]) {
         value.userPage[key] = 'blank';
       }
@@ -72,9 +72,9 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
       .catch(error => this.submitMessage = error.message);
   }
 
-  cancel() {
+  cancel(event: Event) {
     event.preventDefault();
-    this.router.navigate(['/']);    
+    this.router.navigate(['/']);
   }
 
 }

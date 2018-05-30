@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './common/services/auth.service';
 import { UserService } from './common/services/user.service';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',

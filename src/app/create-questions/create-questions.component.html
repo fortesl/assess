@@ -1,105 +1,110 @@
-<div class="create-content">
-  <div class="header">
-    {{ page === 'first' ? 'Create Question' : 'Provide Solution'}}
+<div class="question-container">
+  <div class="create-form">
+    <div class="header">
+      {{ page === 'first' ? 'Create Question' : 'Provide Solution'}}
+    </div>
+    <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+
+      <div *ngIf="page === 'first'">
+        <div formGroupName="metadata">
+          <mat-form-field class="areas">
+            <input matInput formControlName="areas" placeholder="Topic areas">
+            <mat-hint>Separate by space. Example: HTML CSS</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="dropdowns">
+          <mat-form-field>
+            <mat-select placeholder="Question Type" formControlName="type" (change)="resetMultipleChoiceOptions()">
+              <mat-option *ngFor="let type of questionTypes" [value]="type.value">
+                {{type.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Question Level" formControlName="level">
+              <mat-option *ngFor="let level of questionLevels" [value]="level.value">
+                {{level.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Time to complete" formControlName="duration">
+              <mat-option *ngFor="let duration of questionDurations" [value]="duration.value">
+                {{duration.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <mat-form-field class="description">
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description" placeholder="Description"></textarea>
+        </mat-form-field>
+        <div class="last-page-button" *ngIf="type.value && description?.value?.length>5">
+          <button mat-raised-button color="primary" (click)="togglePage()">Provide the Solution To the Question </button>
+        </div>
+      </div>
+
+      <div *ngIf="page === 'last'">
+        <div class="tf-answer" *ngIf="type.value === 'True/False'">
+          <p class="show-description">{{description.value}}</p>
+          <p>Provide the correct True/False answer</p>
+          <mat-checkbox formControlName="mcOption1Val">
+            True
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption2Val">
+            False
+          </mat-checkbox>
+        </div>
+        <div class="mc-answer" *ngIf="type.value === 'MC'">
+          <p class="show-description">{{description.value}}</p>
+          <p>Name each option. Leave blank the extra options if not needed. Check the correct answer</p>
+          <mat-checkbox formControlName="mcOption1Val">
+            <input formControlName="mcOption1">
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption2Val">
+            <input formControlName="mcOption2">
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption3Val">
+            <input formControlName="mcOption3">
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption4Val">
+            <input formControlName="mcOption4">
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption5Val">
+            <input formControlName="mcOption5">
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption6Val">
+            <input formControlName="mcOption6">
+          </mat-checkbox>
+          <mat-checkbox formControlName="mcOption7Val">
+            <input formControlName="mcOption7">
+          </mat-checkbox>
+        </div>
+        <div class="essay-answer" *ngIf="type.value === 'Essay'">
+          <p class="show-description">{{description.value}}</p>
+          <mat-form-field class="solution">
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="solution" placeholder="Provide a solution"></textarea>
+          </mat-form-field>
+        </div>
+        <mat-form-field class="explanation">
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="explanation" placeholder="Give an explanation of your answer or solution"></textarea>
+        </mat-form-field>
+
+
+        <div clas="buttons">
+          <button [disabled]="form.pending || form.untouched || form.invalid || disableSubmit()" class="submit" mat-raised-button color="primary"
+            type=submit>Create
+          </button>
+          <button routerLink="." (click)="cancel($event)" mat-raised-button class="reset">Back
+          </button>
+        </div>
+        <mat-error [ngClass]="{'create-fail': createError, 'create-success': !createError}">{{ submitMessage }}</mat-error>
+
+      </div>
+
+    </form>
   </div>
-  <form [formGroup]="form" (ngSubmit)="submit(form.value)">
-
-    <div *ngIf="page === 'first'">
-      <div formGroupName="metadata">
-        <mat-form-field class="areas">
-          <input matInput formControlName="areas" placeholder="Topic areas">
-          <mat-hint>Separate by space. Example: HTML CSS</mat-hint>
-        </mat-form-field>
-      </div>
-
-      <div class="dropdowns">
-        <mat-form-field>
-          <mat-select placeholder="Question Type" formControlName="type" (change)="resetMultipleChoiceOptions()">
-            <mat-option *ngFor="let type of questionTypes" [value]="type.value">
-              {{type.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Question Level" formControlName="level">
-            <mat-option *ngFor="let level of questionLevels" [value]="level.value">
-              {{level.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Time to complete" formControlName="duration">
-            <mat-option *ngFor="let duration of questionDurations" [value]="duration.value">
-              {{duration.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <mat-form-field class="description">
-        <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description" placeholder="Description"></textarea>
-      </mat-form-field>
-      <div class="last-page-button" *ngIf="type.value && description?.value?.length>5">
-        <button mat-raised-button color="primary" (click)="togglePage()">Provide the Solution To the Question </button>
-      </div>
-    </div>
-
-    <div *ngIf="page === 'last'">
-      <div class="tf-answer" *ngIf="type.value === 'True/False'">
-        <p class="show-description">{{description.value}}</p>
-        <p>Provide the correct True/False answer</p>
-        <mat-checkbox formControlName="mcOption1Val">
-          True
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption2Val">
-          False
-        </mat-checkbox>
-      </div>
-      <div class="mc-answer" *ngIf="type.value === 'MC'">
-        <p class="show-description">{{description.value}}</p>
-        <p>Name each option. Leave blank the extra options if not needed. Check the correct answer</p>
-        <mat-checkbox formControlName="mcOption1Val">
-          <input formControlName="mcOption1">
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption2Val">
-          <input formControlName="mcOption2">
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption3Val">
-          <input formControlName="mcOption3">
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption4Val">
-          <input formControlName="mcOption4">
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption5Val">
-          <input formControlName="mcOption5">
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption6Val">
-          <input formControlName="mcOption6">
-        </mat-checkbox>
-        <mat-checkbox formControlName="mcOption7Val">
-          <input formControlName="mcOption7">
-        </mat-checkbox>
-      </div>
-      <div class="essay-answer" *ngIf="type.value === 'Essay'">
-        <p class="show-description">{{description.value}}</p>
-        <mat-form-field class="solution">
-          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="solution" placeholder="Provide a solution"></textarea>
-        </mat-form-field>
-      </div>
-      <mat-form-field class="explanation">
-        <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="explanation" placeholder="Give an explanation of your answer or solution"></textarea>
-      </mat-form-field>
-
-
-      <div clas="buttons">
-        <button [disabled]="form.pending || form.untouched || form.invalid || disableSubmit()" class="submit" mat-raised-button color="primary"
-          type=submit>Create
-        </button>
-        <button routerLink="." (click)="cancel($event)" mat-raised-button class="reset">Back
-        </button>
-      </div>
-      <mat-error [ngClass]="{'create-fail': createError, 'create-success': !createError}">{{ submitMessage }}</mat-error>
-
-    </div>
-
-  </form>
+  <div class="list-questions">
+    <app-list-questions></app-list-questions>
+  </div>
 </div>

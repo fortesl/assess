@@ -5,11 +5,11 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class QuestionService {
   constructor(private db: AngularFireDatabase) { }
-  
-  private readonly _dbName = 'questions'
+
+  private readonly _dbName = 'questions';
 
   get(query: any): Observable<any> {
-    return this.db.list(this._dbName, query).valueChanges();
+    return this.db.list(this._dbName).valueChanges();
   }
 
   create(question: any): Promise<any> {

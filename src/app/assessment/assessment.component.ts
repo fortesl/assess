@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 })
 export class AssessmentComponent {
 
-  constructor(assessment: AssessmentService, private auth: AuthService, private router: Router) { 
+  constructor(assessment: AssessmentService, private auth: AuthService, private router: Router) {
     if (assessment.current) {
       this.name = assessment.currentName;
       this.framework = assessment.current.framework;
       this.language = assessment.current.language;
       this.ocupation = assessment.current.ocupation;
-      this.industry = assessment.current.industry;  
+      this.industry = assessment.current.industry;
     }
   }
 

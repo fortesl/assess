@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ChangeDetectorRef, Inject, OnDestroy } from '
 import { Router, ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../common/services/assessment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
 
-  constructor(fb: FormBuilder, private router: Router, public assessment: AssessmentService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { 
+  constructor(fb: FormBuilder, private router: Router, public assessment: AssessmentService,
+    private route: ActivatedRoute, private cdr: ChangeDetectorRef) {
     this.form = fb.group({
       title: [],
       header: [],
@@ -23,13 +24,15 @@ export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
   form: FormGroup;
   submitMessage: string;
   page = '';
-  private _subscription:Subscription;
+  private _subscription: Subscription;
 
   ngAfterViewInit() {
     this._subscription = this.route.paramMap
     .subscribe(x => {
       this.page = x.get('page');
-      this.form.setValue(Object.assign(this.form.value, this.page === 'admin' ? this.assessment.current.adminPage : this.assessment.current.userPage));
+      this.form.setValue(Object.assign(this.form.value, this.page === 'admin'
+        ? this.assessment.current.adminPage
+        : this.assessment.current.userPage));
       this.cdr.detectChanges();
     });
   }
@@ -40,7 +43,7 @@ export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
 
   submit(value) {
     this.submitMessage = 'Created Assessment ' + this.assessment.currentName;
-    for (let key in value) {
+    for (const key in value) {
       if (!value[key]) {
         value[key] = 'blank';
       }
@@ -51,9 +54,9 @@ export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
       .catch(error => this.submitMessage = error.message);
   }
 
-  cancel() {
+  cancel(event: Event) {
     event.preventDefault();
-    this.router.navigate(['/']);    
+    this.router.navigate(['/']);
   }
 
 }

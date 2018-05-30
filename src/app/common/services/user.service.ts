@@ -3,7 +3,7 @@ import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { AppUser } from '../../models/app-user';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from './auth.service';
 import { AssessmentService } from './assessment.service';
 
@@ -26,17 +26,17 @@ export class UserService {
           this.assessmentName = x.assessments[0];
         } else if (x.roles.includes('superadmin')) {
           this.assessment.connect('CUC-101');
-          this.assessmentName = 'CUC-101';          
+          this.assessmentName = 'CUC-101';
         }
       }
     });
 
     setTimeout(() => {
       if (this._subscription) {
-        this._subscription.unsubscribe(); 
+        this._subscription.unsubscribe();
         this._subscription = undefined;
       }}, 5000);
-    
+
   }
 
   saveNewUser(uid: string, user: AppUser) {
@@ -48,7 +48,7 @@ export class UserService {
   }
 
   getUsers(assessment: string): Observable<AppUser[]> {
-    return this.db.list(this._userDbName).valueChanges() as Observable<AppUser[]>
+    return this.db.list(this._userDbName).valueChanges() as Observable<AppUser[]>;
   }
-  
+
 }
