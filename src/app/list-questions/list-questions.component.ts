@@ -10,7 +10,7 @@ import { AssessmentService } from '../common/services/assessment.service';
   styleUrls: ['./list-questions.component.css']
 })
 export class ListQuestionsComponent  implements OnDestroy  {
-  displayedColumns = ['description', 'areas'];
+  displayedColumns = ['areas', 'type', 'level'];
   dataSource: MatTableDataSource<any>;
   private _subscripton: Subscription;
   questions: any[] = [];

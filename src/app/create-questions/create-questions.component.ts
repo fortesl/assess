@@ -117,6 +117,7 @@ export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
     .subscribe(x => {
       this.page = x.get('page');
       this.createError = false;
+      this.submitMessage = '';
       this.cdr.detectChanges();
     });
     this.cdr.detectChanges();

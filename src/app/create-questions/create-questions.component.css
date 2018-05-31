@@ -6,9 +6,13 @@
   flex-flow: row wrap;
 }
 
+.create-form {
+  width: 70%;
+  padding: 1rem;
+}
 .list-questions {
-  width: 40%;
-  min-width: 600px;
+  width: 30%;
+  min-width: 400px;
 }
 
 .header {
@@ -32,7 +36,7 @@
   padding-right: 3rem;
 }
 
-.description, .explanation {
+.description, .explanation, .solution {
   width: 100%;
   padding: 1rem 0;
 }
