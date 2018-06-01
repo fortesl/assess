@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy:gh": "ng build --prod --base-href='https://fortesl.github.io/assess/' && sudo ngh"
+    "deploy:gh": "ng build --prod --output-path docs --base-href='https://fortesl.github.io/assess/' && sudo ngh"
   },
   "private": true,
   "dependencies": {
