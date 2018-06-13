@@ -1,22 +1,25 @@
 <div class="assessment-container">
 
   <div class="header">
-    {{ name }}
+    {{ assessment.currentName }}
   </div>
 
   <div class="metadata">
     <div class="left">
       <p>
-        <span class="label">Industry:</span>&nbsp; {{ industry }} </p>
+        <span class="label">Industry:</span>&nbsp; {{ assess?.industry }} </p>
       <p>
-        <span class="label">Ocupation:</span>&nbsp; {{ ocupation }}</p>
+        <span class="label">Ocupation:</span>&nbsp; {{ assess?.ocupation }}</p>
     </div>
     <div class="right">
       <p>
-        <span class="label">Framework:</span>&nbsp; {{ framework }}</p>
+        <span class="label">Framework:</span>&nbsp; {{ assess?.framework }}</p>
       <p>
-        <span class="label">Programming Language:</span>&nbsp; {{ language }}</p>
+        <span class="label">Programming Language:</span>&nbsp; {{ assess?.language }}</p>
     </div>
   </div>
+  <p><span class="label">Number of Questions:</span>&nbsp;
+    <a routerLink="/admin/question/list">{{ questions?.length }}</a>
+  </p>
 
 </div>

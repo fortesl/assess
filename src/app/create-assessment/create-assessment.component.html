@@ -1,104 +1,81 @@
-
 <div class="create-assessment">
   <div class="header">
-    Create Assessment
+    {{ assessment.currentName ? assessment.currentName : 'Create '}} Assessment
   </div>
   <form [formGroup]="form" (ngSubmit)="submit(form.value)">
     <mat-form-field class="name">
-      <input 
-        matInput
-        formControlName="name" 
-        placeholder="Assessment name">
+      <input matInput formControlName="name" placeholder="Assessment name">
     </mat-form-field>
-    <mat-divider></mat-divider>
-    <div class="pages-container">
-      <div class="admin-page" formGroupName="adminPage">
-        <h2>Administrator landing page</h2>
-        <mat-form-field class="title">
-          <input
-            formControlName="title"
-            matInput
-            placeholder="Page title">
-            </mat-form-field>
-        <mat-form-field class="header">
-          <textarea
-            matTextareaAutosize matAutosizeMinRows="2"
-            matAutosizeMaxRows="5"
-            formControlName="header"
-            matInput
-            placeholder="Page header">
-          </textarea>
-          </mat-form-field>
-          <mat-form-field class="content">
-          <textarea
-            matTextareaAutosize matAutosizeMinRows="2"
-            matAutosizeMaxRows="5"
-            formControlName="content"
-            matInput
-            placeholder="Page main content">
-          </textarea>
+
+    <div class="metadata" *ngIf="page === 'dataPage'">
+      <div class="left">
+        <mat-form-field class="industry">
+          <input matInput formControlName="industry" placeholder="Industry">
         </mat-form-field>
-        <mat-form-field class="footer">
-          <textarea
-            matTextareaAutosize matAutosizeMinRows="2"
-            matAutosizeMaxRows="5"
-            formControlName="footer"
-            matInput
-            placeholder="Page footer">
-          </textarea>
-        </mat-form-field>      
+        <mat-form-field class="ocupation">
+          <input matInput formControlName="ocupation" placeholder="Ocupation">
+        </mat-form-field>
       </div>
-      <mat-divider></mat-divider>
-      <div class="user-page" formGroupName="userPage">
-        <h2>User landing page</h2>
-        <mat-form-field class="title">
-          <input
-            formControlName="title"
-            matInput
-            placeholder="Page title">
+      <div class="right">
+        <mat-form-field class="framework">
+          <input matInput formControlName="framework" placeholder="Framework">
         </mat-form-field>
-        <mat-form-field class="header">
-          <textarea
-            matTextareaAutosize matAutosizeMinRows="2"
-            matAutosizeMaxRows="5"
-            formControlName="header"
-            matInput
-            placeholder="Page header">
-          </textarea>
+        <mat-form-field class="language">
+          <input matInput formControlName="language" placeholder="Programming Language">
         </mat-form-field>
-        <mat-form-field class="content">
-          <textarea
-            matTextareaAutosize matAutosizeMinRows="2"
-            matAutosizeMaxRows="5"
-            formControlName="content"
-            matInput
-            placeholder="Page main content">
-          </textarea>
-        </mat-form-field>
-        <mat-form-field class="footer">
-          <textarea
-            matTextareaAutosize matAutosizeMinRows="2"
-            matAutosizeMaxRows="5"
-            formControlName="footer"
-            matInput
-            placeholder="Page footer">
-          </textarea>
-        </mat-form-field>      
       </div>
-    </div>          
-    <mat-divider></mat-divider>
-    <button
-      [disabled]="form.pending || form.untouched || form.invalid"
-      class="submit"
-      mat-raised-button
-      color="primary"
-      type=submit>Create
+    </div>
+
+    <div class="admin-page" formGroupName="adminPage" *ngIf="page === 'adminPage'">
+      <h3>Administrator landing page</h3>
+      <mat-form-field class="title">
+        <input formControlName="title" matInput placeholder="Page title">
+      </mat-form-field>
+      <mat-form-field class="header">
+        <textarea matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="header" matInput placeholder="Page header">
+        </textarea>
+      </mat-form-field>
+      <mat-form-field class="content">
+        <textarea matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="content" matInput placeholder="Page main content">
+        </textarea>
+      </mat-form-field>
+      <mat-form-field class="footer">
+        <textarea matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="footer" matInput placeholder="Page footer">
+        </textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="user-page" formGroupName="userPage" *ngIf="page === 'userPage'">
+      <h3>User landing page</h3>
+      <mat-form-field class="title">
+        <input formControlName="title" matInput placeholder="Page title">
+      </mat-form-field>
+      <mat-form-field class="header">
+        <textarea matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="header" matInput placeholder="Page header">
+        </textarea>
+      </mat-form-field>
+      <mat-form-field class="content">
+        <textarea matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="content" matInput placeholder="Page main content">
+        </textarea>
+      </mat-form-field>
+      <mat-form-field class="footer">
+        <textarea matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="footer" matInput placeholder="Page footer">
+        </textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="nav-buttons" *ngIf="name.value">
+      <button (click)="moveToPage('dataPage', $event)" mat-raised-button class="back-button" *ngIf="page !== 'dataPage'">Back
+      </button>
+      <button (click)="moveToPage('userPage', $event)" mat-raised-button class="landing-button" *ngIf="page !== 'userPage'">User landing page
+      </button>
+      <button (click)="moveToPage('adminPage', $event)" mat-raised-button class="landing-button" *ngIf="page !== 'adminPage'">Admin landing page
+      </button>
+    </div>
+
+    <button [disabled]="form.pending || form.untouched || form.invalid" class="submit" mat-raised-button color="primary" type=submit>Create
     </button>
-    <button
-      routerLink="."
-      (click)="cancel($event)"
-      mat-raised-button
-      class="reset">Cancel
+    <button routerLink="." (click)="cancel($event)" mat-raised-button class="reset">Cancel
     </button>
   </form>
 </div>

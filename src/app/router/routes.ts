@@ -12,16 +12,17 @@ import { ViewResultsComponent } from '../view-results/view-results.component';
 import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 import { EditAssessmentComponent } from '../edit-assessment/edit-assessment.component';
 import { AssessmentComponent } from '../assessment/assessment.component';
+import { ListQuestionsComponent } from '../list-questions/list-questions.component';
 
 export const routes: Route[] = [
   { path: '',  component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent},
-  { path: 'admin/assessment/:page', component: EditAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-  { path: 'admin/assessment', component: AssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-  { path: 'admin/questions/create/:page', component: CreateQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/assessment/create/:page', component: CreateAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/assessment/:assessment/:page', component: AssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/question/create/:page', component: CreateQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/question/list', component: ListQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/results', component: ViewResultsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-  { path: 'admin/users/create', component: CreateUsersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-  { path: 'superadmin/assessment/create', component: CreateAssessmentComponent, canActivate: [AuthGuard, SuperAdminAuthGuard] },
+  { path: 'admin/user/create', component: CreateUsersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: '**', component: NotFoundComponent }
 ];

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../common/services/assessment.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -11,9 +11,15 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class CreateAssessmentComponent implements OnInit, OnDestroy {
 
-  constructor(fb: FormBuilder, private router: Router, private assessment: AssessmentService) {
+  constructor(fb: FormBuilder, private router: Router, public assessment: AssessmentService, private route: ActivatedRoute) {
     this.form = fb.group({
-      name: ['CUC-101', Validators.required],
+      name: ['', Validators.required],
+      startDate: [new Date().getTime(), Validators.required],
+      endDate: [new Date().getTime(), Validators.required],
+      industry: ['', Validators.required],
+      framework: ['', Validators.required],
+      language: ['', Validators.required],
+      ocupation: ['', Validators.required],
       adminPage: fb.group({
         title: [],
         header: [],
@@ -32,26 +38,26 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
   form: FormGroup;
   submitMessage: string;
   _subscription: Subscription;
+  page: string;
 
   ngOnInit() {
-   this.retrieveAssessment(this.name.value);
+    this._subscription = this.route.paramMap
+    .subscribe(x => {
+      this.page = x.get('page');
+    });
+  }
+
+  get name() {
+    return this.form.get('name');
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
   }
 
-  retrieveAssessment(name: string) {
-    if (name) {
-      this._subscription = this.assessment.get(name)
-        .subscribe(x => {
-          this.form.setValue(Object.assign(this.form.value, x));
-        });
-    }
-  }
-
-  get name() {
-    return this.form.get('name');
+  moveToPage(page: string, event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/admin/assessment/create', page]);
   }
 
   submit(value) {

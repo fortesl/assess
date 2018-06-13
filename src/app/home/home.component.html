@@ -3,27 +3,30 @@
   <ng-template #requestLogin>
     <div class="request-login">
       <a [routerLink]="['/login']">Please Login</a>
-    </div>  
+    </div>
+  </ng-template>
+
+  <ng-template #noAssessment>
+    Welcome!!!!
   </ng-template>
 
   <div class="user-page" *ngIf="auth.loggedInUser.email; else requestLogin">
+    <div *ngIf="assessment.currentName && assessment.get(assessment.currentName) | async as assess; else noAssessment">
+      <div class="title">
+        {{ page === 'admin' ? assess.adminPage.title : assess.userPage.title }}
+      </div>
 
-    <div class="title">
-      {{ getSection('title') }}
+      <header class="header">
+          {{ page === 'admin' ? assess.adminPage.header : assess.userPage.header }}
+      </header>
+
+      <main class="content">
+          {{ page === 'admin' ? assess.adminPage.content : assess.userPage.content }}
+      </main>
+
+      <footer class="footer">
+          {{ page === 'admin' ? assess.adminPage.footer : assess.userPage.footer }}
+      </footer>
     </div>
-
-    <header class="header">
-      {{ getSection('header') }}
-    </header>
-
-    <main class="content">
-      {{ getSection('content') }}
-    </main>
-
-    <footer class="footer">
-      {{ getSection('footer') }}
-    </footer>
-
   </div>
 </div>
-

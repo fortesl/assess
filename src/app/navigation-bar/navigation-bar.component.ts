@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, OnChanges, SimpleChanges, AfterContentChecked } from '@angular/core';
 import { NavItem } from './nav-item';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../common/services/auth.service';
@@ -9,8 +9,8 @@ import { CurrentRouteService } from '../common/current-route.service';
   templateUrl: './navigation-bar.component.html',
   styleUrls: ['./navigation-bar.component.css']
 })
-export class NavigationBarComponent {
-  constructor(private router: Router, public currentRoute: CurrentRouteService, public auth: AuthService) {
+export class NavigationBarComponent implements AfterContentChecked {
+  constructor(public router: Router, public currentRoute: CurrentRouteService, public auth: AuthService) {
     router.events
       .subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -25,17 +25,20 @@ export class NavigationBarComponent {
     { label: 'Home', path: ['/'], icon: 'home' }
   ];
 
+  showDropdown = false;
+
   navAdminDropdown: NavItem = {
-    label: 'Assessment', roles: ['admin'], items: [
-      { label: 'Assessment', path: ['/admin/assessment'], roles: ['admin'] },
-      { label: 'Users', path: ['/admin/users/create'], roles: ['admin'] },
-      { label: 'Admin Page', path: ['/admin/assessment', 'admin'], roles: ['admin'] },
-      { label: 'User Page', path: ['/admin/assessment', 'user'], roles: ['admin'] },
-      { label: 'Create Assessment', path: ['/superadmin/assessment/create'], roles: ['superadmin'] },
-      { label: 'Questions', path: ['/admin/questions/create', 'first'], roles: ['admin'] },
-      { label: 'Results', path: ['/admin/results'], roles: ['admin'] }
-      ]
-    };
+    label: 'Assessment', roles: ['admin'] , items: [
+       { label: 'Create new', path: ['/admin/assessment/create', 'dataPage'], roles: ['admin'] }
+    ]
+    //   { label: 'Users', path: ['/admin/user/create'], roles: ['admin'] },
+    //   { label: 'Admin Page', path: ['/admin/assessment', 'admin'], roles: ['admin'] },
+    //   { label: 'User Page', path: ['/admin/assessment', 'user'], roles: ['admin'] },
+    //   { label: 'Create Assessment', path: ['/admin/assessment/create'], roles: ['admin'] },
+    //   { label: 'Questions', path: ['/admin/question/create', 'first'], roles: ['admin'] },
+    //   { label: 'Results', path: ['/admin/results'], roles: ['admin'] }
+    //   ]
+     };
 
   loggedInUserMenu: NavItem = {
     label: 'UserName',
@@ -51,8 +54,16 @@ export class NavigationBarComponent {
     path: ['/login']
   };
 
-  login() {
-    this.router.navigate(this.loggedOutUserMenu.path);
+  ngAfterContentChecked(): void {
+    if (this.auth.loggedInUser.email) {
+      this.navAdminDropdown.items.length = 1;
+      this.auth.loggedInUser.assessments.forEach(x => this.navAdminDropdown.items.push({
+        label: x, path: ['/admin/assessment', x, 'dataPage'], roles: ['admin']
+      }));
+      this.showDropdown =  true;
+    } else {
+      this.showDropdown = false;
+    }
   }
 
   onUserMenuClick(item: NavItem) {

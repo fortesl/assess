@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ChangeDetectorRef, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../common/services/assessment.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -10,10 +10,10 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './edit-assessment.component.html',
   styleUrls: ['./edit-assessment.component.css']
 })
-export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
+export class EditAssessmentComponent implements OnInit, OnDestroy {
 
   constructor(fb: FormBuilder, private router: Router, public assessment: AssessmentService,
-    private route: ActivatedRoute, private cdr: ChangeDetectorRef) {
+    private route: ActivatedRoute) {
     this.form = fb.group({
       title: [],
       header: [],
@@ -26,19 +26,26 @@ export class EditAssessmentComponent implements AfterViewInit, OnDestroy {
   page = '';
   private _subscription: Subscription;
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this._subscription = this.route.paramMap
     .subscribe(x => {
       this.page = x.get('page');
-      this.form.setValue(Object.assign(this.form.value, this.page === 'admin'
-        ? this.assessment.current.adminPage
-        : this.assessment.current.userPage));
-      this.cdr.detectChanges();
     });
   }
 
+  private retrieveAssessment(name: string) {
+    if (name) {
+      this._subscription = this.assessment.get(name)
+        .subscribe(x => {
+          this.form.setValue(Object.assign(this.form.value, x));
+        });
+    }
+  }
+
   ngOnDestroy(): void {
-    this._subscription.unsubscribe();
+    if (this._subscription) {
+      this._subscription.unsubscribe();
+    }
   }
 
   submit(value) {

@@ -15,7 +15,7 @@
 
   <ng-template #anonymousUser>
     <button
-      (click)="login()"
+      (click)="router.navigate(loggedOutUserMenu.path)"
       mat-button
       [ngClass]="{'active-nav-link': currentRoute.url === '/login'}"
     >
@@ -52,5 +52,5 @@
       mat-menu-item>
         {{ item.label }}
       </button>
-  </mat-menu>
+</mat-menu>
 

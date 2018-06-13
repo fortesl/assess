@@ -19,7 +19,7 @@ export class ListQuestionsComponent  implements OnDestroy  {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(db: QuestionService, assessment: AssessmentService) {
-    this._subscripton = db.get(assessment.currentName)
+    this._subscripton = db.get()
       .subscribe(x => {
         this.dataSource = new MatTableDataSource(x);
         this.questions = x;

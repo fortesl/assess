@@ -8,12 +8,19 @@ export class QuestionService {
 
   private readonly _dbName = 'questions';
 
-  get(query: any): Observable<any> {
-    return this.db.list(this._dbName).valueChanges();
+  get(query?: Query): Observable<any> {
+    return query
+      ? this.db.list(this._dbName, ref => ref.orderByChild(query.key).equalTo(query.value)).valueChanges()
+      : this.db.list(this._dbName).valueChanges();
   }
 
   create(question: any): Promise<any> {
     const id = new Date().getTime() + '_'  + question.createdBy.substring(0, 3);
     return this.db.object(`${this._dbName}/${id}`).set(question);
   }
+}
+
+export interface Query {
+  key: string;
+  value: string;
 }

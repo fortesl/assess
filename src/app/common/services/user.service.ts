@@ -10,24 +10,16 @@ import { AssessmentService } from './assessment.service';
 @Injectable()
 export class UserService {
 
-  constructor(private db: AngularFireDatabase, private auth: AuthService, private assessment: AssessmentService) { }
+  constructor(private db: AngularFireDatabase, private auth: AuthService) { }
 
   private readonly _userDbName = 'users';
   _subscription: Subscription;
-  assessmentName: string;
 
   updateAppUser(user: firebase.User) {
     this._subscription = this.get(user.uid)
     .subscribe(x => {
       if (x) {
         this.auth.loggedInUser = x;
-        if (x.assessments) {
-          this.assessment.connect(x.assessments[0]);
-          this.assessmentName = x.assessments[0];
-        } else if (x.roles.includes('superadmin')) {
-          this.assessment.connect('CUC-101');
-          this.assessmentName = 'CUC-101';
-        }
       }
     });
 
