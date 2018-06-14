@@ -35,6 +35,8 @@ import { EditAssessmentComponent } from './edit-assessment/edit-assessment.compo
 import { QuestionService } from './common/services/question.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { ListQuestionsComponent } from './list-questions/list-questions.component';
+import { DialogComponent } from './common/dialog/dialog/dialog.component';
+import { DatabaseService } from './common/database.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { ListQuestionsComponent } from './list-questions/list-questions.componen
     ListUsersComponent,
     EditAssessmentComponent,
     AssessmentComponent,
-    ListQuestionsComponent
+    ListQuestionsComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -74,9 +77,11 @@ import { ListQuestionsComponent } from './list-questions/list-questions.componen
     CurrentRouteService,
     SuperAdminAuthGuard,
     AssessmentService,
-    QuestionService
+    QuestionService,
+    DatabaseService
   ],
   entryComponents: [
+    DialogComponent
   ],
   bootstrap: [AppComponent]
 })

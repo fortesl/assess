@@ -5,16 +5,20 @@ export interface Assessment {
     header: string;
     title: string;
   };
-  frameworks: string[];
+  framework: string;
   industry: string;
-  language: string;
-  ocupation: string;
+  language?: string;
+  field?: string;
+  occupation: string;
   createdBy: string;
-  createDate: number;
+  createDate: string;
   passingGrade: number;
+  startDate: string;
+  endDate: string;
   name: string;
-  company: string;
-  description: string;
+  company?: string;
+  description?: string;
+  level?: string;
   userPage: {
     content: string;
     footer: string;

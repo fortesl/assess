@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{data?.title | titlecase}}</h2>
+<mat-dialog-content>
+  {{data.instructions}}
+  <div *ngIf="data?.get">
+    <mat-form-field>
+        <input [(ngModel)]="field" matInput>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="field || 'Yes'">Ok</button>
+</mat-dialog-actions>

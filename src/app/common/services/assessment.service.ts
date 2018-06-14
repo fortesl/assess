@@ -12,14 +12,14 @@ export class AssessmentService {
   constructor(private db: AngularFireDatabase, private auth: AuthService, private router: Router) { }
 
   private readonly _dbName = 'assessment';
-  currentName: string;
+  _currentName: string;
 
   get(name): Observable<any> {
     if (!this.auth.loggedInUser.email) {
       this.router.navigate(['/']);
       return null;
     } else if (name) {
-      this.currentName = name;
+      if (name !== 'CUC-101') { this._currentName = name; }
       return this.db.object(`${this._dbName}/${name}`).valueChanges();
     }
     return null;
@@ -27,7 +27,12 @@ export class AssessmentService {
 
   create(name: string, assessment: any): Promise<any> {
     delete assessment.name;
+    if (name !== 'CUC-101') { this._currentName = name; }
     return this.db.object(`${this._dbName}/${name}`).update(assessment);
+  }
+
+  get currentName() {
+    return this._currentName;
   }
 
 }

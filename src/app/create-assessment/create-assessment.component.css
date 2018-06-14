@@ -1,29 +1,34 @@
 .create-assessment {
-    width: 90%;
-    margin: auto;
+  width: 90%;
+  margin: auto;
 }
-.create-assessment > .header {
-    font-weight: 700;
-    font-size: 1.4rem;
-    margin: auto;
-  }
-.pages-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column wrap;
-}
-.pages-container > * {
-    flex: 1;
+
+.create-assessment>.header {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: auto;
 }
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
-.name {
-    width: 30%;
-    margin: auto;
-    text-align: center;
-    margin-top: 2rem;
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.grade {
+  width: auto;
+}
+
+.error {
+  text-align: center;
+  margin-top: 0.5rem;
 }

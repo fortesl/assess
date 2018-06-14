@@ -11,7 +11,8 @@
   </ng-template>
 
   <div class="user-page" *ngIf="auth.loggedInUser.email; else requestLogin">
-    <div *ngIf="assessment.currentName && assessment.get(assessment.currentName) | async as assess; else noAssessment">
+    <div *ngIf="assess; else noAssessment">
+      <h4>{{assess.name}}</h4>
       <div class="title">
         {{ page === 'admin' ? assess.adminPage.title : assess.userPage.title }}
       </div>

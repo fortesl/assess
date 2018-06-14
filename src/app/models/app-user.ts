@@ -3,6 +3,7 @@ export interface AppUser {
   email: string;
   roles: string[];
   assessments?: string[];
+  uid?: string;
 }
 
 export const userReset: AppUser = {

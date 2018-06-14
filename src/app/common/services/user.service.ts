@@ -20,6 +20,7 @@ export class UserService {
     .subscribe(x => {
       if (x) {
         this.auth.loggedInUser = x;
+        this.auth.loggedInUser.uid = user.uid;
       }
     });
 
@@ -31,8 +32,12 @@ export class UserService {
 
   }
 
-  saveNewUser(uid: string, user: AppUser) {
-    this.db.object(`${this._userDbName}/${uid}`).set(user);
+  saveNewUser(uid: string, user: AppUser): Promise<any> {
+    return this.db.object(`${this._userDbName}/${uid}`).set(user);
+  }
+
+  setUserAssessments(uid: string, assessments: string[]): Promise<any> {
+    return this.db.object(`${this._userDbName}/${uid}/assessments`).set(assessments);
   }
 
   get(uid: string): Observable<AppUser> {
