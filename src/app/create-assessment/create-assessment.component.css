@@ -1,12 +1,14 @@
-.create-assessment {
-  width: 90%;
+.assessment-container {
+  width: 97%;
   margin: auto;
 }
 
-.create-assessment>.header {
+.assessment-container>.header {
   font-weight: 700;
   font-size: 1.4rem;
   margin: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 mat-form-field {
@@ -31,4 +33,25 @@ button {
 .error {
   text-align: center;
   margin-top: 0.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.header {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.content {
+  font-weight: 400;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.7rem;
+  font-weight: 300;
 }

@@ -1,11 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AssessmentService } from '../common/services/assessment.service';
-import { NavItem } from '../navigation-bar/nav-item';
-import { AuthService } from '../common/services/auth.service';
-import { Router } from '@angular/router';
-import { QuestionService } from '../common/services/question.service';
-import { Observable } from 'rxjs/Observable';
-import { UserService } from '../common/services/user.service';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -15,27 +10,20 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class AssessmentComponent implements OnInit, OnDestroy {
 
-  constructor(public assessment: AssessmentService, private question: QuestionService, private auth: AuthService) {
+  constructor(public assessment: AssessmentService, private route: ActivatedRoute) {
   }
-  assess: any;
-  questions: any[];
-  _qSubsc: Subscription;
-  _aSubsc: Subscription;
+
+  private _subscription: Subscription;
+  assess;
 
   ngOnInit() {
-    this._aSubsc = this.assessment.get(this.auth.loggedInUser.assessments[0])
+    this.assessment.currentName = this.route.snapshot.params['assessment'];
+    this._subscription = this.assessment.get(this.assessment.currentName)
       .subscribe(x => this.assess = x);
-    this._qSubsc = this.question.get()
-      .subscribe(x => this.questions = x);
   }
 
   ngOnDestroy() {
-    if (this._aSubsc) {
-      this._aSubsc.unsubscribe();
-    }
-    if (this._qSubsc) {
-      this._qSubsc.unsubscribe();
-    }
+    if (this._subscription) { this._subscription.unsubscribe(); }
   }
 
 }

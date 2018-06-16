@@ -10,7 +10,7 @@
     Welcome!!!!
   </ng-template>
 
-  <div class="user-page" *ngIf="auth.loggedInUser.email; else requestLogin">
+  <ng-container *ngIf="auth.loggedInUser.email; else requestLogin">
     <div *ngIf="assess; else noAssessment">
       <h4>{{assess.name}}</h4>
       <div class="title">
@@ -29,5 +29,5 @@
           {{ page === 'admin' ? assess.adminPage.footer : assess.userPage.footer }}
       </footer>
     </div>
-  </div>
+  </ng-container>
 </div>

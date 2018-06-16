@@ -19,7 +19,7 @@ export const routes: Route[] = [
   { path: 'login', component: LoginComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent},
   { path: 'admin/assessment/create/:page', component: CreateAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
-  { path: 'admin/assessment/:assessment/:page', component: AssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/assessment/:assessment', component: AssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/question/create/:page', component: CreateQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/question/list', component: ListQuestionsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/results', component: ViewResultsComponent, canActivate: [AuthGuard, AdminAuthGuard] },

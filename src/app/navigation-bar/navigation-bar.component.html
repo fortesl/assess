@@ -8,7 +8,7 @@
     <mat-icon [title]="link.label" *ngIf="link.icon">{{ link.icon }}</mat-icon>
   </a>
 
-  <a mat-tab-link [ngClass]="{hide: !isAuthorized(navAdminDropdown.roles)}" [matMenuTriggerFor]="adminDropdown">
+  <a mat-tab-link [ngClass]="{hide: !isAuthorized(navAdminDropdown.roles)}" [matMenuTriggerFor]="adminDropdown" (click)="onDropdownMenuClick()">
       <span *ngIf="!navAdminDropdown.icon">{{ navAdminDropdown.label }}</span>
       <mat-icon [title]="navAdminDropdown.label" *ngIf="navAdminDropdown.icon">{{ navAdminDropdown.icon }}</mat-icon>
   </a>
@@ -38,7 +38,7 @@
   <button
     *ngFor="let item of navAdminDropdown.items"
     [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
-    (click)="onUserMenuClick(item)"
+    (click)="onDropdownMenuItemClick(item)"
     mat-menu-item>
       {{ item.label }}
     </button>
@@ -48,7 +48,7 @@
     <button
       *ngFor="let item of loggedInUserMenu.items"
       [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
-      (click)="onUserMenuClick(item)"
+      (click)="onDropdownMenuItemClick(item)"
       mat-menu-item>
         {{ item.label }}
       </button>

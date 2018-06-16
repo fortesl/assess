@@ -35,4 +35,8 @@ export class AssessmentService {
     return this._currentName;
   }
 
+  set currentName(name) {
+    this._currentName = name;
+  }
+
 }

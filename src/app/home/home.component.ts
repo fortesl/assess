@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, AfterViewInit} from '@angular/core';
 import { AuthService } from '../common/services/auth.service';
 import { AppUser } from '../models/app-user';
 import { AssessmentService } from '../common/services/assessment.service';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit, OnDestroy {
 
   constructor(public auth: AuthService, public assessment: AssessmentService) { }
 
@@ -18,14 +18,29 @@ export class HomeComponent implements OnInit {
   assess;
   _subscription: Subscription;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+
+    (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length)
+      ? this.getAssessment()
+      : setTimeout(() => this.getAssessment(), 600);
+  }
+
+  private getAssessment() {
     if (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length) {
       this.page = this.auth.loggedInUser.roles.includes('admin') ? 'admin' : 'user';
       this._subscription = this.assessment.get(this.auth.loggedInUser.assessments[0])
         .subscribe(x => {
-          this.assess = x;
-          this.assess.name = this.auth.loggedInUser.assessments[0];
-        });
+          if (x) {
+            this.assess = x;
+            this.assess.name = this.auth.loggedInUser.assessments[0];
+          }
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this._subscription) {
+      this._subscription.unsubscribe();
     }
   }
 

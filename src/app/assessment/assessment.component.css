@@ -1,13 +1,19 @@
 .assessment-container {
   width: 90%;
   margin: auto;
-  text-align: center;
 }
 
 .header {
   font-weight: 700;
   font-size: 1.5rem;
   margin: 1rem 0;
+  text-align: center;
+}
+
+.description {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .metadata {
@@ -20,7 +26,7 @@
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .metadata>div {

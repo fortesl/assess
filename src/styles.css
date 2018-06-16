@@ -5,16 +5,29 @@
 * {
   box-sizing: border-box;
 }
-.create-fail {
+
+.fail {
   text-align: center;
   margin-top: 0.5rem;
+  color: red;
 }
-.create-success {
+
+.success {
   text-align: center;
   margin-top: 0.5rem;
   color: green;
 }
+
 .highlight {
   background-color:  rgba(239, 240, 247, 0.3);
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+.flex-container > * {
+  padding-right: 2rem;
 }
 

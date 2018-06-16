@@ -1,16 +1,18 @@
-import { Component, AfterViewInit, OnChanges, SimpleChanges, AfterContentChecked } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavItem } from './nav-item';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../common/services/auth.service';
 import { CurrentRouteService } from '../common/current-route.service';
+import { AssessmentService } from '../common/services/assessment.service';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
   styleUrls: ['./navigation-bar.component.css']
 })
-export class NavigationBarComponent implements AfterContentChecked {
-  constructor(public router: Router, public currentRoute: CurrentRouteService, public auth: AuthService) {
+export class NavigationBarComponent {
+  constructor(public router: Router, public currentRoute: CurrentRouteService,
+    public auth: AuthService, private assessment: AssessmentService) {
     router.events
       .subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -29,7 +31,7 @@ export class NavigationBarComponent implements AfterContentChecked {
 
   navAdminDropdown: NavItem = {
     label: 'Assessment', roles: ['admin'] , items: [
-       { label: 'Create new', path: ['/admin/assessment/create', 'dataPage'], roles: ['admin'] }
+       { label: 'Create New', path: ['/admin/assessment/create', 'initial'], roles: ['admin'] }
     ]
     //   { label: 'Users', path: ['/admin/user/create'], roles: ['admin'] },
     //   { label: 'Admin Page', path: ['/admin/assessment', 'admin'], roles: ['admin'] },
@@ -54,24 +56,20 @@ export class NavigationBarComponent implements AfterContentChecked {
     path: ['/login']
   };
 
-  ngAfterContentChecked(): void {
-    if (this.auth.loggedInUser.email) {
-      this.navAdminDropdown.items.length = 1;
-      this.auth.loggedInUser.assessments.forEach(x => this.navAdminDropdown.items.push({
-        label: x, path: ['/admin/assessment', x, 'dataPage'], roles: ['admin']
-      }));
-      this.showDropdown =  true;
-    } else {
-      this.showDropdown = false;
-    }
+  onDropdownMenuClick(): void {
+    this.navAdminDropdown.items.length = 1;
+    this.auth.loggedInUser.assessments.forEach(x => this.navAdminDropdown.items.push({
+      label: x, path: ['/admin/assessment', x], roles: ['admin']
+    }));
   }
 
-  onUserMenuClick(item: NavItem) {
+  onDropdownMenuItemClick(item: NavItem) {
     if (item.label === 'Logout') {
       this.auth.logout()
-        .then(() => {
-          this.router.navigate(item.path);
-        });
+        .then(x => this.router.navigate(item.path));
+    } else if (item.label === 'Create New') {
+      this.assessment.currentName = '';
+      this.router.navigate(item.path);
     } else {
       this.router.navigate(item.path);
     }

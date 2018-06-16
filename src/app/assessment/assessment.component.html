@@ -2,24 +2,41 @@
 
   <div class="header">
     {{ assessment.currentName }}
+    <a [routerLink]="['/admin/assessment/create', 'initial']">
+      <mat-icon>edit</mat-icon>
+    </a>
   </div>
-
-  <div class="metadata">
+  <div class="description">
+    {{ assess?.description }}
+  </div>
+  <div class="metadata" *ngIf="assess">
     <div class="left">
       <p>
-        <span class="label">Industry:</span>&nbsp; {{ assess?.industry }} </p>
+        <span class="label">Start Date:</span>&nbsp; {{ assess.startDate }} </p>
+      <p>
+        <span class="label">Company:</span>&nbsp; {{ assess?.company }} </p>
       <p>
         <span class="label">Ocupation:</span>&nbsp; {{ assess?.ocupation }}</p>
-    </div>
-    <div class="right">
       <p>
         <span class="label">Framework:</span>&nbsp; {{ assess?.framework }}</p>
       <p>
+        <span class="label">Level:</span>&nbsp; {{ assess?.level }}</p>
+    </div>
+    <div class="right">
+      <p>
+        <span class="label">End Date:</span>&nbsp; {{ assess.endDate }} </p>
+      <p>
+        <span class="label">Industry:</span>&nbsp; {{ assess?.industry }} </p>
+      <p>
+        <span class="label">Field:</span>&nbsp; {{ assess?.field }}</p>
+      <p>
         <span class="label">Programming Language:</span>&nbsp; {{ assess?.language }}</p>
+      <p>
+        <span class="label">Passing Grade:</span>&nbsp; {{ assess.passingGrade }}%</p>
     </div>
   </div>
-  <p><span class="label">Number of Questions:</span>&nbsp;
+  <!-- <p><span class="label">Number of Questions:</span>&nbsp;
     <a routerLink="/admin/question/list">{{ questions?.length }}</a>
-  </p>
+  </p> -->
 
 </div>
