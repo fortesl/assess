@@ -1,7 +1,3 @@
-.mat-button {
-  padding: 0.4rem;
-}
-
 .arrow-drop-down {
   left: 2rem;
 }
@@ -11,4 +7,10 @@
 
 .hide {
   display: none;
+}
+
+.user-menu {
+  position: absolute;
+  right: 20px;
+  padding: 0.4rem 4rem;
 }

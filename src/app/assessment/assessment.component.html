@@ -1,42 +1,61 @@
-<div class="assessment-container">
-
-  <div class="header">
+<mat-drawer-container class="assessment-container" autosize>
+  <mat-drawer #drawer class="assessment-sidenav" mode="side">
+    <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
     {{ assessment.currentName }}
-    <a [routerLink]="['/admin/assessment/create', 'initial']">
-      <mat-icon>edit</mat-icon>
-    </a>
-  </div>
-  <div class="description">
-    {{ assess?.description }}
-  </div>
-  <div class="metadata" *ngIf="assess">
-    <div class="left">
-      <p>
-        <span class="label">Start Date:</span>&nbsp; {{ assess.startDate }} </p>
-      <p>
-        <span class="label">Company:</span>&nbsp; {{ assess?.company }} </p>
-      <p>
-        <span class="label">Ocupation:</span>&nbsp; {{ assess?.ocupation }}</p>
-      <p>
-        <span class="label">Framework:</span>&nbsp; {{ assess?.framework }}</p>
-      <p>
-        <span class="label">Level:</span>&nbsp; {{ assess?.level }}</p>
-    </div>
-    <div class="right">
-      <p>
-        <span class="label">End Date:</span>&nbsp; {{ assess.endDate }} </p>
-      <p>
-        <span class="label">Industry:</span>&nbsp; {{ assess?.industry }} </p>
-      <p>
-        <span class="label">Field:</span>&nbsp; {{ assess?.field }}</p>
-      <p>
-        <span class="label">Programming Language:</span>&nbsp; {{ assess?.language }}</p>
-      <p>
-        <span class="label">Passing Grade:</span>&nbsp; {{ assess.passingGrade }}%</p>
-    </div>
-  </div>
-  <!-- <p><span class="label">Number of Questions:</span>&nbsp;
-    <a routerLink="/admin/question/list">{{ questions?.length }}</a>
-  </p> -->
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.path">
+        <span *ngIf="!link.icon">{{ link.label }}</span>
+        <mat-icon [title]="link.label" *ngIf="link.icon">{{ link.icon }}</mat-icon>
+      </a>
+   </mat-nav-list>
 
-</div>
+
+
+
+  </mat-drawer>
+
+  <div class="assessment-sidenav-content">
+    <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+    <div class="header">
+      {{ assessment.currentName }}
+      <a [routerLink]="['/admin/assessment/create', 'initial']">
+        <mat-icon>edit</mat-icon>
+      </a>
+    </div>
+    <div class="description">
+      {{ assess?.description }}
+    </div>
+    <div class="metadata" *ngIf="assess">
+      <div class="left">
+        <p>
+          <span class="label">Start Date:</span>&nbsp; {{ assess.startDate }} </p>
+        <p>
+          <span class="label">Company:</span>&nbsp; {{ assess?.company }} </p>
+        <p>
+          <span class="label">Ocupation:</span>&nbsp; {{ assess?.ocupation }}</p>
+        <p>
+          <span class="label">Framework:</span>&nbsp; {{ assess?.framework }}</p>
+        <p>
+          <span class="label">Level:</span>&nbsp; {{ assess?.level }}</p>
+      </div>
+      <div class="right">
+        <p>
+          <span class="label">End Date:</span>&nbsp; {{ assess.endDate }} </p>
+        <p>
+          <span class="label">Industry:</span>&nbsp; {{ assess?.industry }} </p>
+        <p>
+          <span class="label">Field:</span>&nbsp; {{ assess?.field }}</p>
+        <p>
+          <span class="label">Programming Language:</span>&nbsp; {{ assess?.language }}</p>
+        <p>
+          <span class="label">Passing Grade:</span>&nbsp; {{ assess.passingGrade }}%</p>
+      </div>
+    </div>
+    <div class="questions" *ngIf="questions?.length">
+      <span class="label">Number of Questions:</span>&nbsp;
+      <a [routerLink]="questionsLink">{{ questions?.length }}</a>
+    </div>
+
+  </div>
+
+</mat-drawer-container>

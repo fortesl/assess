@@ -14,6 +14,7 @@ export class AuthService {
   }
   private _subscription: Subscription;
   isLoggedInUser$: Observable <firebase.User>;
+  userLoginChecked: boolean;
 
   private _loggedInUser = userReset;
 

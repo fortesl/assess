@@ -14,7 +14,10 @@ export class AppComponent {
       .subscribe(user => {
         if (user) {
           db.updateAppUser(user);
+        } else {
+          auth.userLoginChecked = true;
         }
+
       });
   }
   title = 'Assess';

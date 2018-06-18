@@ -1,16 +1,12 @@
-<div class="home-content">
+<ng-template #spinner>
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
 
-  <ng-template #requestLogin>
-    <div class="request-login">
-      <a [routerLink]="['/login']">Please Login</a>
-    </div>
-  </ng-template>
+<div class="home-content" *ngIf="auth.userLoginChecked; else spinner">
 
-  <ng-template #noAssessment>
-    Welcome!!!!
-  </ng-template>
-
-  <ng-container *ngIf="auth.loggedInUser.email; else requestLogin">
+  <div *ngIf="auth.loggedInUser.email; else requestLogin">
     <div *ngIf="assess; else noAssessment">
       <h4>{{assess.name}}</h4>
       <div class="title">
@@ -29,5 +25,16 @@
           {{ page === 'admin' ? assess.adminPage.footer : assess.userPage.footer }}
       </footer>
     </div>
-  </ng-container>
+  </div>
 </div>
+
+<ng-template #requestLogin>
+  <div class="request-login">
+    <a [routerLink]="['/login']">Please Login</a>
+  </div>
+</ng-template>
+
+<ng-template #noAssessment>
+  Welcome!!!!
+</ng-template>
+

@@ -1,6 +1,13 @@
 .assessment-container {
-  width: 90%;
+  width: 100%;
   margin: auto;
+}
+.assessment-sidenav-content {
+  padding-left: 1rem;
+} 
+
+.assessment-sidenav {
+  padding: 0 1rem;
 }
 
 .header {
@@ -14,6 +21,12 @@
   margin-bottom: 0.5rem;
   font-size: 1rem;
   text-align: center;
+}
+
+.questions {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .metadata {

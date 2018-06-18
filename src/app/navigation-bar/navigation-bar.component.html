@@ -1,56 +1,33 @@
 <nav mat-tab-nav-bar>
-  <a mat-tab-link
-     *ngFor="let link of navLinks"
-     [routerLink]="link.path"
-     routerLinkActive="'active-nav-link'"
-  >
+  <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="'active-nav-link'">
     <span *ngIf="!link.icon">{{ link.label }}</span>
     <mat-icon [title]="link.label" *ngIf="link.icon">{{ link.icon }}</mat-icon>
   </a>
 
-  <a mat-tab-link [ngClass]="{hide: !isAuthorized(navAdminDropdown.roles)}" [matMenuTriggerFor]="adminDropdown" (click)="onDropdownMenuClick()">
-      <span *ngIf="!navAdminDropdown.icon">{{ navAdminDropdown.label }}</span>
-      <mat-icon [title]="navAdminDropdown.label" *ngIf="navAdminDropdown.icon">{{ navAdminDropdown.icon }}</mat-icon>
-  </a>
-
   <ng-template #anonymousUser>
-    <button
-      (click)="router.navigate(loggedOutUserMenu.path)"
-      mat-button
-      [ngClass]="{'active-nav-link': currentRoute.url === '/login'}"
-    >
+    <button (click)="router.navigate(loggedOutUserMenu.path)" mat-button [ngClass]="{'active-nav-link': currentRoute.url === '/login', 'user-menu': true}">
       <span *ngIf="!loggedOutUserMenu.icon">{{ loggedOutUserMenu.label }}</span>
       <mat-icon [title]="loggedOutUserMenu.label" *ngIf="loggedOutUserMenu.icon">{{ loggedOutUserMenu.icon }}</mat-icon>
     </button>
   </ng-template>
 
-  <button
-    *ngIf="auth.loggedInUser.email; else anonymousUser"
-    mat-button
-    [matMenuTriggerFor]="menu"
-  >
-    {{ auth.loggedInUser.name || auth.loggedInUser.email}}
+  <button *ngIf="auth.loggedInUser.email; else anonymousUser" mat-button [matMenuTriggerFor]="menu" (click)="onMenuClick()" class="user-menu">
+    {{ userFirstName() || auth.loggedInUser.email}}
     <mat-icon>arrow_drop_down</mat-icon>
   </button>
 </nav>
 
-<mat-menu #adminDropdown="matMenu" [overlapTrigger]="false">
-  <button
-    *ngFor="let item of navAdminDropdown.items"
-    [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
-    (click)="onDropdownMenuItemClick(item)"
-    mat-menu-item>
-      {{ item.label }}
-    </button>
-</mat-menu>
-
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
-    <button
-      *ngFor="let item of loggedInUserMenu.items"
-      [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
-      (click)="onDropdownMenuItemClick(item)"
-      mat-menu-item>
-        {{ item.label }}
-      </button>
+  <button mat-menu-item [matMenuTriggerFor]="assessment" [ngClass]="{hide: !assessmentMenu.items.length}">Assessment</button>
+  <button *ngFor="let item of loggedInUserMenu.items" [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}" (click)="onMenuItemClick(item)"
+    mat-menu-item>
+    {{ item.label }}
+  </button>
 </mat-menu>
 
+<mat-menu #assessment="matMenu" [overlapTrigger]="false">
+  <button *ngFor="let item of assessmentMenu.items" [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}" (click)="onMenuItemClick(item)"
+    mat-menu-item>
+    {{ item.label }}
+  </button>
+</mat-menu>

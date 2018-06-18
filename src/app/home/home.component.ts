@@ -16,16 +16,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   page: string;
   assess;
-  _subscription: Subscription;
+  private _subscription: Subscription;
+  private _clearInterval;
 
+  
   ngAfterViewInit(): void {
-
-    (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length)
-      ? this.getAssessment()
-      : setTimeout(() => this.getAssessment(), 600);
+    this._clearInterval = setInterval(x => {
+      if (this.auth.userLoginChecked) { this.getAssessment(); }
+    }, 300);
   }
 
   private getAssessment() {
+    clearInterval(this._clearInterval);
     if (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length) {
       this.page = this.auth.loggedInUser.roles.includes('admin') ? 'admin' : 'user';
       this._subscription = this.assessment.get(this.auth.loggedInUser.assessments[0])

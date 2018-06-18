@@ -56,14 +56,29 @@ export class NavigationBarComponent {
     path: ['/login']
   };
 
-  onDropdownMenuClick(): void {
-    this.navAdminDropdown.items.length = 1;
-    this.auth.loggedInUser.assessments.forEach(x => this.navAdminDropdown.items.push({
-      label: x, path: ['/admin/assessment', x], roles: ['admin']
-    }));
+  assessmentMenu: NavItem = {
+    label: 'Assessment',
+    items: []
   }
 
-  onDropdownMenuItemClick(item: NavItem) {
+  userFirstName(): string {
+    const fl = this.auth.loggedInUser.name.split(' ');
+    return fl[0];
+  } 
+
+  onMenuClick(): void {
+    if (this.auth.loggedInUser.email) {
+      this.assessmentMenu.items.length = 0;
+      if (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length) {
+        this.assessmentMenu.items.push({ label: 'Create New', path: ['/admin/assessment/create', 'initial'], roles: ['admin'] });
+        this.auth.loggedInUser.assessments.forEach(x => this.assessmentMenu.items.push({
+          label: x, path: ['/admin/assessment', x], roles: ['admin']
+        }));
+      }
+    }
+  }
+
+  onMenuItemClick(item: NavItem) {
     if (item.label === 'Logout') {
       this.auth.logout()
         .then(x => this.router.navigate(item.path));

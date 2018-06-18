@@ -3,6 +3,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import { QuestionService } from '../common/services/question.service';
 import { AssessmentService } from '../common/services/assessment.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list-questions',
@@ -18,8 +19,9 @@ export class ListQuestionsComponent  implements OnDestroy  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(db: QuestionService, assessment: AssessmentService) {
-    this._subscripton = db.get()
+  constructor(db: QuestionService, assessment: AssessmentService, private route: ActivatedRoute) {
+    assessment.currentName = this.route.snapshot.params['assessment'];
+    this._subscripton = db.get({key: 'assessment', value: assessment.currentName})
       .subscribe(x => {
         this.dataSource = new MatTableDataSource(x);
         this.questions = x;

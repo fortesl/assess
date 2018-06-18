@@ -13,6 +13,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -29,7 +33,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatRadioModule,
     MatDividerModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule
   ],
   exports: [
     MatButtonModule,
@@ -45,7 +53,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatRadioModule,
     MatDividerModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule
   ],
 })
 export class ShopMaterialModule { }

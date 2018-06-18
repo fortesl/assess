@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AssessmentService } from '../common/services/assessment.service';
@@ -22,7 +24,7 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
 
   constructor(fb: FormBuilder, private router: Router, public assessment: AssessmentService, private route: ActivatedRoute,
     public dialog: MatDialog, private db: DatabaseService, private auth: AuthService, private tcp: TitleCasePipe,
-    private user: UserService) {
+    private user: UserService, private location: Location) {
     this.form = fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -180,6 +182,17 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
     newAssess.createDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDay()}`;
     newAssess.createdBy = this.auth.loggedInUser.email;
 
+    for (const key in newAssess.adminPage) {
+      if (!newAssess.adminPage[key]) {
+        newAssess.adminPage[key] = 'blank';
+      }
+    }
+    for (const key in newAssess.userPage) {
+      if (!newAssess.userPage[key]) {
+        newAssess.userPage[key] = 'blank';
+      }
+    }
+
     this.submitMessage = 'Created Assessment ' + value.name;
     this.assessment.create(name, value)
       .then(() => {
@@ -214,7 +227,7 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
 
   cancel(event: Event) {
     event.preventDefault();
-    this.router.navigate(['/']);
+    this.location.back();
   }
 
 }

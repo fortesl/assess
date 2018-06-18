@@ -22,6 +22,7 @@ export class UserService {
         this.auth.loggedInUser = x;
         this.auth.loggedInUser.uid = user.uid;
       }
+      this.auth.userLoginChecked = true;
     });
 
     setTimeout(() => {

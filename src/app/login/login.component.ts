@@ -53,6 +53,7 @@ export class LoginComponent implements OnDestroy {
         .subscribe(x => {
           if (x) {
             this.auth.loggedInUser = x;
+            this.auth.loggedInUser.uid = user.uid;
           }
 
           const returnUrl = localStorage.getItem('returnUrl');

@@ -14,7 +14,6 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { CreateAssessmentComponent } from './create-assessment/create-assessment.component';
 import { CreateQuestionsComponent } from './create-questions/create-questions.component';
-import { ViewQuestionsComponent } from './view-questions/view-questions.component';
 import { ViewResultsComponent } from './view-results/view-results.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -49,7 +48,6 @@ import { DatabaseService } from './common/database.service';
     CreateUsersComponent,
     CreateAssessmentComponent,
     CreateQuestionsComponent,
-    ViewQuestionsComponent,
     ViewResultsComponent,
     ListUsersComponent,
     EditAssessmentComponent,
