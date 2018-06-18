@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../common/services/user.service';
 import { AssessmentService } from '../common/services/assessment.service';
 import { AppUser } from '../models/app-user';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list-users',
@@ -19,14 +20,17 @@ export class ListUsersComponent implements OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(db: UserService, assessment: AssessmentService) {
-    this._subscripton = db.getUsers('CUC-101')
+  constructor(db: UserService, public assessment: AssessmentService, private router: Router, route: ActivatedRoute) {
+    assessment.currentName = route.snapshot.params['assessment'];
+    this._subscripton = db.getUsers(assessment.currentName)
       .subscribe(users => {
         this.dataSource = new MatTableDataSource(users);
         this.users = users;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          }, 2000);
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -41,4 +45,7 @@ export class ListUsersComponent implements OnDestroy {
     }
   }
 
+  goToAssessment() {
+    this.router.navigate([`/admin/assessment`, this.assessment.currentName]);
+  }
 }

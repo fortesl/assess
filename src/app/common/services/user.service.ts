@@ -3,6 +3,7 @@ import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { AppUser } from '../../models/app-user';
 import { Observable } from 'rxjs/Observable';
+import { filter } from 'rxjs/operators/filter';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from './auth.service';
 import { AssessmentService } from './assessment.service';
@@ -46,7 +47,9 @@ export class UserService {
   }
 
   getUsers(assessment: string): Observable<AppUser[]> {
-    return this.db.list(this._userDbName).valueChanges() as Observable<AppUser[]>;
+    let idx = 0;
+    return this.db.list(this._userDbName, ref => ref.orderByKey()).valueChanges().
+      filter(x => ((x as AppUser[])[idx++]).assessments.includes(assessment)) as Observable<AppUser[]>;
   }
 
 }

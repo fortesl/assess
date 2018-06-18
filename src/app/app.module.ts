@@ -30,7 +30,6 @@ import { ShopMaterialModule } from './common/shop-material/shop-material.module'
 import { CurrentRouteService } from './common/current-route.service';
 import { AssessmentService } from './common/services/assessment.service';
 import { ListUsersComponent } from './list-users/list-users.component';
-import { EditAssessmentComponent } from './edit-assessment/edit-assessment.component';
 import { QuestionService } from './common/services/question.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { ListQuestionsComponent } from './list-questions/list-questions.component';
@@ -50,7 +49,6 @@ import { DatabaseService } from './common/database.service';
     CreateQuestionsComponent,
     ViewResultsComponent,
     ListUsersComponent,
-    EditAssessmentComponent,
     AssessmentComponent,
     ListQuestionsComponent,
     DialogComponent

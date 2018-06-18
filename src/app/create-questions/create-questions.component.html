@@ -6,42 +6,32 @@
     <form [formGroup]="form" (ngSubmit)="submit(form.value)">
 
       <div *ngIf="page === 'first'">
-        <div formGroupName="metadata">
-          <mat-form-field class="areas">
-            <input matInput formControlName="areas" placeholder="Topic areas">
-            <mat-hint>Separate by space. Example: HTML CSS</mat-hint>
-          </mat-form-field>
-        </div>
+        <mat-form-field class="areas">
+          <input matInput formControlName="areas" placeholder="Topic areas" required>
+          <mat-hint>Separate by space. Example: HTML CSS</mat-hint>
+        </mat-form-field>
 
         <div class="dropdowns">
-          <mat-form-field>
-            <mat-select placeholder="Question Type" formControlName="type" (change)="resetMultipleChoiceOptions()">
-              <mat-option *ngFor="let type of questionTypes" [value]="type.value">
-                {{type.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Question Level" formControlName="level">
-              <mat-option *ngFor="let level of questionLevels" [value]="level.value">
-                {{level.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Time to complete" formControlName="duration">
-              <mat-option *ngFor="let duration of questionDurations" [value]="duration.value">
-                {{duration.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div *ngFor="let category of dropdowns">
+            <mat-form-field [class]="category.formControl">
+              <mat-select [placeholder]="category.label" [formControlName]="category.formControl" [required]="category.required">
+                <mat-option *ngFor="let item of category.items" [value]="item.name">
+                  {{item.name}}
+                </mat-option>
+                <mat-option [value]="" (click)="other(category.formControl)">Other...</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
+
         <mat-form-field class="description">
-          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description" placeholder="Description"></textarea>
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description" placeholder="Description" required></textarea>
         </mat-form-field>
-        <div class="last-page-button" *ngIf="type.value && description?.value?.length>5">
-          <button mat-raised-button color="primary" (click)="togglePage()">Provide the Solution To the Question </button>
+        <div class="last-page-button">
+          <button mat-raised-button [disabled]="!type.value || description?.value?.length < 5" color="primary" (click)="togglePage($event)">Provide the Solution To the Question </button>
         </div>
+
+        <mat-error [ngClass]="{'fail': createError, 'success': !createError}">{{ submitMessage }}</mat-error>
       </div>
 
       <div *ngIf="page === 'last'">
@@ -87,7 +77,8 @@
           </mat-form-field>
         </div>
         <mat-form-field class="explanation">
-          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="explanation" placeholder="Give an explanation of your answer or solution"></textarea>
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="explanation"
+          placeholder="Give an explanation of your answer or solution" required></textarea>
         </mat-form-field>
 
 
@@ -98,8 +89,6 @@
           <button routerLink="." (click)="cancel($event)" mat-raised-button class="reset">Back
           </button>
         </div>
-        <mat-error [ngClass]="{'create-fail': createError, 'create-success': !createError}">{{ submitMessage }}</mat-error>
-
       </div>
 
     </form>

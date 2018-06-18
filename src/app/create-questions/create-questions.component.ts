@@ -1,33 +1,32 @@
-import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AssessmentService } from '../common/services/assessment.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QuestionService } from '../common/services/question.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthService } from '../common/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DatabaseService } from '../common/database.service';
+import { DialogComponent } from '../common/dialog/dialog/dialog.component';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-questions',
   templateUrl: './create-questions.component.html',
-  styleUrls: ['./create-questions.component.css']
+  styleUrls: ['./create-questions.component.css'],
+  providers: [TitleCasePipe]
 })
-export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
+export class CreateQuestionsComponent implements OnInit, OnDestroy {
 
   constructor(fb: FormBuilder, private router: Router,
-    private assessment: AssessmentService, private question: QuestionService, private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute, private auth: AuthService) {
+      private assessment: AssessmentService, private question: QuestionService,
+      private route: ActivatedRoute, private auth: AuthService,
+      public dialog: MatDialog, private db: DatabaseService, private tcp: TitleCasePipe) {
     this.form = fb.group({
-      metadata: fb.group({
-        assessmentName: [],
-        framework: ['N/A'],
-        industry: ['N/A'],
-        ocupation: ['N/A'],
-        programmingLanguage: ['N/A'],
-        areas: ['', Validators.required]
-      }),
+      areas: ['', Validators.required],
       type: ['', Validators.required],
-      duration: [1, Validators.required],
-      level: ['Medium', Validators.required],
+      duration: ['', Validators.required],
+      level: ['', Validators.required],
       description: ['', Validators.required],
       solution: [],
       mcOption1: [],
@@ -46,105 +45,58 @@ export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
       mcOption7Val: [false],
       explanation: ['', Validators.required]
     });
+    this.assessment.currentName = this.route.snapshot.params['assessment'];
   }
 
-  _subscription: Subscription;
+  private _subscription: Subscription;
+  private _assesSubscription: Subscription;
   createError: boolean;
 
   form: FormGroup;
   submitMessage: string;
-  questionTypes = [{
-    name: 'True/False',
-    value: 'True/False'
-    }, {
-        name: 'Multiple Choice',
-        value: 'MC'
-    }, {
-        name: 'Essay',
-        value: 'Essay'
-    }
-  ];
-  questionDurations = [{
-    name: '1 minute',
-    value: 1
-    }, {
-      name: '5 minutes',
-      value: 5
-    }, {
-      name: '15 minutes',
-      value: 15
-    }, {
-      name: '30 minutes',
-      value: 30
-    }, {
-      name: '45 minutes',
-      value: 45
-    }, {
-      name: '1 hour',
-      value: 60
-    }, {
-      name: '2 hours',
-      value: 120
-    }
-  ];
-  questionLevels = [{
-    name: 'Senior Level',
-    value: 'Senior'
-    }, {
-      name: 'Medium Level',
-      value: 'Medium'
-    }, {
-      name: 'Junior Level',
-      value: 'Junior'
-    }, {
-      name: 'Aprentice Level',
-      value: 'Aprentice'
-    }
-  ];
+  dropdowns = [ {
+    name: 'question-types',
+    label: 'Question Type',
+    formControl: 'type',
+    items: [],
+    subscription: null,
+    required: true
+  }, {
+    name: 'levels',
+    label: 'Question Level',
+    formControl: 'level',
+    items: [],
+    subscription: null,
+    required: true
+  }, {
+    name: 'question-durations',
+    label: 'Time to Complete',
+    formControl: 'duration',
+    items: [],
+    subscription: null,
+    required: true
+  }];
+
   page: string;
 
   private _numberOfMcOptions = 7;
 
-  ngAfterViewInit() {
-    this.assessmentName.setValue(this.assessment.currentName);
-    this.ocupation.setValue('Software Developer');
-    this.framework.setValue('.NET');
-    this.programmingLanguage.setValue('C#');
-    this.areas.setValue('WCF');
-    this.industry.setValue('Government Services');
-
+  ngOnInit() {
     this._subscription = this.route.paramMap
     .subscribe(x => {
       this.page = x.get('page');
-      this.createError = false;
-      this.submitMessage = '';
-      this.cdr.detectChanges();
     });
-    this.cdr.detectChanges();
+
+    this.dropdowns.forEach(x => x.subscription = this.db.getList(x.name)
+      .subscribe(list => x.items = list));
+
   }
 
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
+    this.dropdowns.forEach(x => x.subscription.unsubscribe());
   }
 
-  get assessmentName() {
-    return this.form.get('metadata.assessmentName');
-  }
-  get ocupation() {
-    return this.form.get('metadata.ocupation');
-  }
-  get framework() {
-    return this.form.get('metadata.framework');
-  }
-  get programmingLanguage() {
-    return this.form.get('metadata.programmingLanguage');
-  }
-  get areas() {
-    return this.form.get('metadata.areas');
-  }
-  get industry() {
-    return this.form.get('metadata.industry');
-  }
   get description() {
     return this.form.get('description');
   }
@@ -198,11 +150,11 @@ export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
     return this.form.get('solution');
   }
 
-  togglePage() {
-    event.preventDefault();
+  togglePage(event?: Event) {
+    if (event) { event.preventDefault(); }
     this.page === 'first'
-      ? this.router.navigate(['/admin/questions/create', 'last'])
-      : this.router.navigate(['/admin/questions/create', 'first']);
+      ? this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'last'])
+      : this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'first']);
   }
 
   disableSubmit(): boolean {
@@ -223,6 +175,23 @@ export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
     return disable;
   }
 
+  other(field) {
+    this.submitMessage = '';
+    this.createError = false;
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { title: field, instructions: `Please enter a value for "other" ${field}.`, get: true, input: ' '}
+    });
+    const dropdown = this.dropdowns.filter(x => x.formControl === field)[0];
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        result = this.tcp.transform(result);
+        this.db.createItem(dropdown.name, { name: result, value: result.toLowerCase().replace(' ', '-') })
+          .catch(error => { this.submitMessage = error.message; this.createError = true; });
+  }
+    });
+  }
+
   resetMultipleChoiceOptions() {
     for (let i = 0; i < this._numberOfMcOptions; i++) {
       const option = `mcOption${i + 1}`;
@@ -233,6 +202,7 @@ export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
   }
   submit(value) {
     this.submitMessage = 'Question Created';
+    this.createError = false;
 
     for (let i = 0; i < this._numberOfMcOptions; i++) {
       const option = `mcOption${i + 1}`;
@@ -248,20 +218,22 @@ export class CreateQuestionsComponent implements AfterViewInit, OnDestroy {
     }
 
     value.createdBy = this.auth.loggedInUser.email;
+    value.assessments = [this.assessment.currentName];
 
     this.question.create(value)
       .then((x) => {
         this.form.get('description').reset();
         this.form.get('explanation').reset();
-        this.form.get('description').reset();
+        this.form.get('solution').reset();
         this.resetMultipleChoiceOptions();
+        this.togglePage();
       })
-      .catch(error => this.submitMessage = error.message);
+      .catch(error => { this.submitMessage = error.message; this.createError = true; });
 
   }
 
-  cancel() {
+  cancel(event: Event) {
     event.preventDefault();
-    this.router.navigate(['/admin/questions/create', 'first']);
+    this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'first']);
   }
 }

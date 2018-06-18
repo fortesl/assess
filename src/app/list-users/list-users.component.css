@@ -13,3 +13,10 @@
   background-color: rgba(197,202,233,.3);
   cursor: pointer;
 }
+
+.header {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}

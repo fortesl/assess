@@ -91,7 +91,7 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
     required: false
   }, {
     name: 'frameworks',
-    label: 'Framework',
+    label: 'Framework / Platform / Environment',
     formControl: 'framework',
     items: [],
     subscription: null,

@@ -59,12 +59,12 @@ export class NavigationBarComponent {
   assessmentMenu: NavItem = {
     label: 'Assessment',
     items: []
-  }
+  };
 
   userFirstName(): string {
     const fl = this.auth.loggedInUser.name.split(' ');
     return fl[0];
-  } 
+  }
 
   onMenuClick(): void {
     if (this.auth.loggedInUser.email) {

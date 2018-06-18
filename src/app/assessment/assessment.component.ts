@@ -17,9 +17,12 @@ export class AssessmentComponent implements OnInit, OnDestroy {
     this.assessment.currentName = this.route.snapshot.params['assessment'];
     this.questionsLink = [`/admin/questions/${this.assessment.currentName}`];
 
-    this.navLinks.push({ label: 'Create Assessment Takers', path: [`/admin/users/create`], roles: ['admin'] });
-    this.navLinks.push({ label: 'Create Questions', path: [`/admin/questions/create`, 'first'], roles: ['admin'] });
-    this.navLinks.push({ label: 'View Assessment Results', path: [`/admin/results/${this.assessment.currentName}`], roles: ['admin'] });
+    this.navLinks.push({ label: 'Create Users',
+      path: [`/admin/users/${this.assessment.currentName}/create`], roles: ['admin'] });
+    this.navLinks.push({ label: 'Create Questions',
+      path: [`/admin/questions/${this.assessment.currentName}/create`, 'first'], roles: ['admin'] });
+    this.navLinks.push({ label: 'View Assessment Results',
+      path: [`/admin/results/${this.assessment.currentName}`], roles: ['admin'] });
   }
 
   private _subscription: Subscription;
@@ -27,13 +30,13 @@ export class AssessmentComponent implements OnInit, OnDestroy {
   assess;
   questions;
   questionsLink;
-  
+
   navLinks: NavItem[] = [];
 
   ngOnInit() {
     this._subscription = this.assessment.get(this.assessment.currentName)
       .subscribe(x => this.assess = x);
-    this._questionSubscription = this.question.get()
+    this._questionSubscription = this.question.getByAssessment(this.assessment.currentName)
       .subscribe(x => this.questions = x);
   }
 

@@ -9,13 +9,10 @@
       </a>
    </mat-nav-list>
 
-
-
-
   </mat-drawer>
 
   <div class="assessment-sidenav-content">
-    <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button (click)="drawer.toggle()" *ngIf="!drawer.opened"><mat-icon>menu</mat-icon></button>
     <div class="header">
       {{ assessment.currentName }}
       <a [routerLink]="['/admin/assessment/create', 'initial']">
