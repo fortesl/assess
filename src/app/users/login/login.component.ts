@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../common/services/auth.service';
+import { AuthService } from '../../common/services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { AppUser } from '../models/app-user';
-import { UserService } from '../common/services/user.service';
+import { AppUser } from '../../models/app-user';
+import { UserService } from '../../common/services/user.service';
 
 @Component({
   selector: 'app-login',

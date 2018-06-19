@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AssessmentService } from '../common/services/assessment.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { NavItem } from '../navigation-bar/nav-item';
+import { NavItem } from '../common/navigation-bar/nav-item';
 import { QuestionService } from '../common/services/question.service';
 
 @Component({

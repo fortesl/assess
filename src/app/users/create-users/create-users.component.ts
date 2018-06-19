@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AuthService } from '../common/services/auth.service';
+import { AuthService } from '../../common/services/auth.service';
 import { Router } from '@angular/router';
-import { UserService } from '../common/services/user.service';
-import { AssessmentService } from '../common/services/assessment.service';
-import { AppUser } from '../models/app-user';
+import { UserService } from '../../common/services/user.service';
+import { AssessmentService } from '../../common/services/assessment.service';
+import { AppUser } from '../../models/app-user';
 
 @Component({
   selector: 'app-create-users',

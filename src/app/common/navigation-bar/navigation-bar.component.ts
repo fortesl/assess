@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavItem } from './nav-item';
 import { Router, NavigationEnd } from '@angular/router';
-import { AuthService } from '../common/services/auth.service';
-import { CurrentRouteService } from '../common/current-route.service';
-import { AssessmentService } from '../common/services/assessment.service';
+import { AuthService } from '@app/common/services/auth.service';
+import { CurrentRouteService } from '@app/common/current-route.service';
+import { AssessmentService } from '@app/common/services/assessment.service';
 
 @Component({
   selector: 'app-navigation-bar',

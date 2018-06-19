@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AssessmentService } from '../common/services/assessment.service';
+import { AssessmentService } from '../../common/services/assessment.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { QuestionService } from '../common/services/question.service';
+import { QuestionService } from '../../common/services/question.service';
 import { Subscription } from 'rxjs/Subscription';
-import { AuthService } from '../common/services/auth.service';
+import { AuthService } from '../../common/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DatabaseService } from '../common/database.service';
-import { DialogComponent } from '../common/dialog/dialog/dialog.component';
+import { DatabaseService } from '../../common/database.service';
+import { DialogComponent } from '../../common/dialog/dialog/dialog.component';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({

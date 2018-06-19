@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
-import { QuestionService } from '../common/services/question.service';
-import { AssessmentService } from '../common/services/assessment.service';
+import { QuestionService } from '../../common/services/question.service';
+import { AssessmentService } from '../../common/services/assessment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

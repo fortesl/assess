@@ -1,9 +1,9 @@
 import { Component, ViewChild, OnDestroy } from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
-import { UserService } from '../common/services/user.service';
-import { AssessmentService } from '../common/services/assessment.service';
-import { AppUser } from '../models/app-user';
+import { UserService } from '../../common/services/user.service';
+import { AssessmentService } from '../../common/services/assessment.service';
+import { AppUser } from '../../models/app-user';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

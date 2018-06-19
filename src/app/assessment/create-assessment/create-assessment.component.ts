@@ -3,16 +3,16 @@ import { Location } from '@angular/common';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AssessmentService } from '../common/services/assessment.service';
+import { AssessmentService } from '@app/common/services/assessment.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../common/dialog/dialog/dialog.component';
-import { DatabaseService } from '../common/database.service';
-import { Assessment } from '../models/assessment';
-import { AuthService } from '../common/services/auth.service';
+import { DialogComponent } from '@app/common/dialog/dialog/dialog.component';
+import { DatabaseService } from '@app/common/database.service';
+import { Assessment } from '@app/models/assessment';
+import { AuthService } from '@app/common/services/auth.service';
 import { TitleCasePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-import { UserService } from '../common/services/user.service';
+import { UserService } from '@app/common/services/user.service';
 
 @Component({
   selector: 'app-create-assessment',
