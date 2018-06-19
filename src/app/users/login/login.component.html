@@ -36,9 +36,10 @@
     color="primary"
     type=submit>Sign in
   </button>
-  <a
-    routerLink="."
+  <button [disabled]="!username.value || username.invalid"
+    mat-button
+    (click)="resetPassword($event)"
     class="reset">Reset Password
-  </a>
-  <mat-error class="login-failed">{{ loginFailed }}</mat-error>
+</button>
+<mat-error [ngClass]="{'fail': loginFailed, 'success': loginSucceeded}">{{ loginFailed || loginSucceeded }}</mat-error>
 </form>

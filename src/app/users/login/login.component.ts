@@ -14,6 +14,7 @@ import { UserService } from '../../common/services/user.service';
 export class LoginComponent implements OnDestroy {
   form: FormGroup;
   loginFailed: string;
+  loginSucceeded: string;
   private _subscription: Subscription;
 
   constructor(fb: FormBuilder, private auth: AuthService, private router: Router, private db: UserService) {
@@ -45,10 +46,22 @@ export class LoginComponent implements OnDestroy {
     return this.form.get('login.password');
   }
 
+  resetPassword(event: Event) {
+    this.loginFailed = '';
+    this.loginSucceeded = '';
+    this.auth.resetPassword(this.username.value)
+      .then(() => this.loginSucceeded = `Reset password email sent to ${this.username.value}.`)
+      .catch(error => this.loginFailed = error.message);
+
+    event.preventDefault();
+    }
+
   submit(value) {
     this.loginFailed = '';
+    this.loginSucceeded = '';
     this.auth.loginWithEmailPassword(value.login)
       .then(user => {
+        this.loginSucceeded = 'logged in';
         this._subscription = this.db.get(user.uid)
         .subscribe(x => {
           if (x) {

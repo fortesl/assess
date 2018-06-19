@@ -12,10 +12,12 @@ import { ViewResultsComponent } from '../../view-results/view-results.component'
 import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 import { AssessmentComponent } from '../../assessment/assessment.component';
 import { ListQuestionsComponent } from '../../questions/list-questions/list-questions.component';
+import { ResetPasswordComponent } from '@app/users/reset-password/reset-password.component';
 
 export const routes: Route[] = [
   { path: '',  component: HomeComponent},
   { path: 'login', component: LoginComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent},
   { path: 'admin/assessment/create/:page', component: CreateAssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/assessment/:assessment', component: AssessmentComponent, canActivate: [AuthGuard, AdminAuthGuard] },

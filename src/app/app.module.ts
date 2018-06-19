@@ -35,6 +35,7 @@ import { AssessmentComponent } from './assessment/assessment.component';
 import { ListQuestionsComponent } from './questions/list-questions/list-questions.component';
 import { DialogComponent } from './common/dialog/dialog/dialog.component';
 import { DatabaseService } from './common/database.service';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { DatabaseService } from './common/database.service';
     ListUsersComponent,
     AssessmentComponent,
     ListQuestionsComponent,
-    DialogComponent
+    DialogComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
