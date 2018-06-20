@@ -19,6 +19,7 @@ export class AppComponent {
         }
 
       });
+      localStorage.removeItem('firebase:previous_websocket_failure');
   }
   title = 'Assess';
   _subscription: Subscription;
