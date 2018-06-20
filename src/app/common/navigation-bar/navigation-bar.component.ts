@@ -24,7 +24,6 @@ export class NavigationBarComponent {
   userMenuSelection: NavItem;
 
   navLinks: NavItem[] = [
-    { label: 'Home', path: ['/'], icon: 'home' }
   ];
 
   showDropdown = false;

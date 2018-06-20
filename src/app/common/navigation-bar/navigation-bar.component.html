@@ -1,4 +1,7 @@
 <nav mat-tab-nav-bar>
+  <a mat-tab-link routerLink="/">
+    <img src="/assets/favicons/asz.png">
+  </a>
   <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="'active-nav-link'">
     <span *ngIf="!link.icon">{{ link.label }}</span>
     <mat-icon [title]="link.label" *ngIf="link.icon">{{ link.icon }}</mat-icon>
@@ -11,7 +14,8 @@
     </button>
   </ng-template>
 
-  <button *ngIf="auth.loggedInUser.email; else anonymousUser" mat-button [matMenuTriggerFor]="menu" (click)="onMenuClick()" class="user-menu">
+  <button *ngIf="auth.loggedInUser.email; else anonymousUser" mat-button [matMenuTriggerFor]="menu" (click)="onMenuClick()"
+    class="user-menu">
     {{ userFirstName() || auth.loggedInUser.email}}
     <mat-icon>arrow_drop_down</mat-icon>
   </button>
