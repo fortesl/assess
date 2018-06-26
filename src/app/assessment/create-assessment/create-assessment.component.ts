@@ -197,13 +197,12 @@ export class CreateAssessmentComponent implements OnInit, OnDestroy {
     this.assessment.create(name, value)
       .then(() => {
         if (!this.assessment.currentName) {
-          this.auth.loggedInUser.assessments
-           ? this.auth.loggedInUser.assessments.unshift(name)
-            : this.auth.loggedInUser.assessments = [name];
+          this.auth.loggedInUser.assessments.unshift(name);
           this.user.setUserAssessments(this.auth.loggedInUser.uid, this.auth.loggedInUser.assessments)
             .catch(error => this.submitMessage = error.message);
+          this.assessment.currentName = name;
         }
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin/assessment', name]);
       })
       .catch(error => this.submitMessage = error.message);
   }

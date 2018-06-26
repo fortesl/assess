@@ -26,25 +26,11 @@ export class NavigationBarComponent {
   navLinks: NavItem[] = [
   ];
 
-  showDropdown = false;
-
-  navAdminDropdown: NavItem = {
-    label: 'Assessment', roles: ['admin'] , items: [
-       { label: 'Create New', path: ['/admin/assessment/create', 'initial'], roles: ['admin'] }
-    ]
-    //   { label: 'Users', path: ['/admin/user/create'], roles: ['admin'] },
-    //   { label: 'Admin Page', path: ['/admin/assessment', 'admin'], roles: ['admin'] },
-    //   { label: 'User Page', path: ['/admin/assessment', 'user'], roles: ['admin'] },
-    //   { label: 'Create Assessment', path: ['/admin/assessment/create'], roles: ['admin'] },
-    //   { label: 'Questions', path: ['/admin/question/create', 'first'], roles: ['admin'] },
-    //   { label: 'Results', path: ['/admin/results'], roles: ['admin'] }
-    //   ]
-     };
-
   loggedInUserMenu: NavItem = {
     label: 'UserName',
     icon: 'person',
     items: [
+      { label: 'Create Question', path: [`/questions/create`, 'first'], roles: ['user'] },
       { label: 'Logout', path: ['/'] }
     ]
   };
@@ -56,7 +42,7 @@ export class NavigationBarComponent {
   };
 
   assessmentMenu: NavItem = {
-    label: 'Assessment',
+    label: 'Assessments',
     items: []
   };
 
@@ -71,7 +57,7 @@ export class NavigationBarComponent {
       if (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length) {
         this.assessmentMenu.items.push({ label: 'Create New', path: ['/admin/assessment/create', 'initial'], roles: ['admin'] });
         this.auth.loggedInUser.assessments.forEach(x => this.assessmentMenu.items.push({
-          label: x, path: ['/admin/assessment', x], roles: ['admin']
+          label: x, path: ['/admin/assessment', x], roles: ['admin'], type: 'assessment'
         }));
       }
     }
@@ -85,6 +71,9 @@ export class NavigationBarComponent {
       this.assessment.currentName = '';
       this.router.navigate(item.path);
     } else {
+      if (item.type && item.type === 'assessment') {
+        this.assessment.currentName = item.label;
+      }
       this.router.navigate(item.path);
     }
   }

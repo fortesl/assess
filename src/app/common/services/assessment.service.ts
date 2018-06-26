@@ -27,7 +27,6 @@ export class AssessmentService {
 
   create(name: string, assessment: any): Promise<any> {
     delete assessment.name;
-    if (name !== 'CUC-101') { this._currentName = name; }
     return this.db.object(`${this._dbName}/${name}`).update(assessment);
   }
 

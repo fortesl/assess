@@ -47,9 +47,16 @@ export class UserService {
   }
 
   getUsers(assessment: string): Observable<AppUser[]> {
-    let idx = 0;
     return this.db.list(this._userDbName, ref => ref.orderByKey()).valueChanges().
-      filter(x => ((x as AppUser[])[idx++]).assessments.includes(assessment)) as Observable<AppUser[]>;
+      map( (list) => {
+        const users: AppUser[] = [];
+        for (let idx = 0; idx < list.length; idx++) {
+          if ((list[idx] as AppUser).assessments.includes(assessment)) {
+            users.push(list[idx] as AppUser);
+          }
+        }
+        return users;
+       });
   }
 
 }

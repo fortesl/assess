@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Question } from '../../models/question';
 
 @Injectable()
@@ -17,9 +17,16 @@ export class QuestionService {
   }
 
   getByAssessment(assessment: string): Observable<any> {
-    let idx = 0;
     return this.db.list(this._dbName, ref => ref.orderByKey()).valueChanges().
-      filter(x => ((x as Question)[idx++]).assessments.includes(assessment));
+      map( (list) => {
+        const questions: Question[] = [];
+        for (let idx = 0; idx < list.length; idx++) {
+          if ((list[idx] as Question).assessments.includes(assessment)) {
+            questions.push(list[idx]);
+          }
+        }
+        return questions;
+       });
   }
 
   create(question: any): Promise<any> {

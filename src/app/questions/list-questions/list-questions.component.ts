@@ -21,7 +21,7 @@ export class ListQuestionsComponent  implements OnDestroy  {
 
   constructor(db: QuestionService, public assessment: AssessmentService,
     route: ActivatedRoute, private router: Router) {
-    assessment.currentName = route.snapshot.params['assessment'];
+    assessment.currentName = route.snapshot.params['assessment'] || assessment.currentName;
     this._subscripton = db.getByAssessment(assessment.currentName)
       .subscribe(x => {
         this.dataSource = new MatTableDataSource(x);

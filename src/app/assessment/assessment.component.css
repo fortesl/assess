@@ -4,10 +4,11 @@
 }
 .assessment-sidenav-content {
   padding-left: 1rem;
-} 
+}
 
 .assessment-sidenav {
   padding: 0 1rem;
+  width: 100%;
 }
 
 .header {

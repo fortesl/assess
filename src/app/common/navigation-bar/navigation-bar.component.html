@@ -22,10 +22,12 @@
 </nav>
 
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [matMenuTriggerFor]="assessment" [ngClass]="{hide: !assessmentMenu.items.length}">Assessment</button>
-  <button *ngFor="let item of loggedInUserMenu.items" [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}" (click)="onMenuItemClick(item)"
+  <button mat-menu-item [matMenuTriggerFor]="assessment" [ngClass]="{hide: !assessmentMenu.items.length}">{{ assessmentMenu.label }}</button>
+  <button *ngFor="let item of loggedInUserMenu.items" [ngClass]="{hide: item.roles && !isAuthorized(item.roles)}"
+  (click)="onMenuItemClick(item)"
     mat-menu-item>
-    {{ item.label }}
+    <span *ngIf="!item?.icon">{{ item.label }}</span>
+    <mat-icon [title]="item.label" *ngIf="item?.icon">{{ item.icon }}</mat-icon>
   </button>
 </mat-menu>
 

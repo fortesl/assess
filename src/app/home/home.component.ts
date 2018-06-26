@@ -19,7 +19,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private _subscription: Subscription;
   private _clearInterval;
 
-  
   ngAfterViewInit(): void {
     this._clearInterval = setInterval(x => {
       if (this.auth.userLoginChecked) { this.getAssessment(); }
@@ -30,11 +29,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     clearInterval(this._clearInterval);
     if (this.auth.loggedInUser.assessments && this.auth.loggedInUser.assessments.length) {
       this.page = this.auth.loggedInUser.roles.includes('admin') ? 'admin' : 'user';
-      this._subscription = this.assessment.get(this.auth.loggedInUser.assessments[0])
+      const aname = this.assessment.currentName ? this.assessment.currentName : this.auth.loggedInUser.assessments[0];
+      this._subscription = this.assessment.get(aname)
         .subscribe(x => {
           if (x) {
             this.assess = x;
-            this.assess.name = this.auth.loggedInUser.assessments[0];
+            this.assess.name = aname;
           }
       });
     }

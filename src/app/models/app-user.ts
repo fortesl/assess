@@ -9,5 +9,6 @@ export interface AppUser {
 export const userReset: AppUser = {
   name: '',
   email: '',
-  roles: []
+  roles: [],
+  assessments: []
   };

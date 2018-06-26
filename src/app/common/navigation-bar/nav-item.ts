@@ -5,4 +5,5 @@ export interface NavItem {
   roles?: string[];
   items?: NavItem[];
   submenu?: string;
+  type?: string;
 }

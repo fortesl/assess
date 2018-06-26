@@ -8,7 +8,7 @@
       <div *ngIf="page === 'first'">
         <mat-form-field class="areas">
           <input matInput formControlName="areas" placeholder="Topic areas" required>
-          <mat-hint>Separate by space. Example: HTML CSS</mat-hint>
+          <mat-hint>Separate by space if more than one. Example: HTML CSS</mat-hint>
         </mat-form-field>
 
         <div class="dropdowns">
@@ -25,7 +25,8 @@
         </div>
 
         <mat-form-field class="description">
-          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description" placeholder="Description" required></textarea>
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description" placeholder="Description"
+            required></textarea>
         </mat-form-field>
         <div class="last-page-button">
           <button mat-raised-button [disabled]="!type.value || description?.value?.length < 5" color="primary" (click)="togglePage($event)">Provide the Solution To the Question </button>
@@ -35,52 +36,53 @@
       </div>
 
       <div *ngIf="page === 'last'">
-        <div class="tf-answer" *ngIf="type.value === 'True/False'">
-          <p class="show-description">{{description.value}}</p>
-          <p>Provide the correct True/False answer</p>
-          <mat-checkbox formControlName="mcOption1Val">
-            True
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption2Val">
-            False
-          </mat-checkbox>
-        </div>
-        <div class="mc-answer" *ngIf="type.value === 'MC'">
-          <p class="show-description">{{description.value}}</p>
-          <p>Name each option. Leave blank the extra options if not needed. Check the correct answer</p>
-          <mat-checkbox formControlName="mcOption1Val">
-            <input formControlName="mcOption1">
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption2Val">
-            <input formControlName="mcOption2">
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption3Val">
-            <input formControlName="mcOption3">
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption4Val">
-            <input formControlName="mcOption4">
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption5Val">
-            <input formControlName="mcOption5">
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption6Val">
-            <input formControlName="mcOption6">
-          </mat-checkbox>
-          <mat-checkbox formControlName="mcOption7Val">
-            <input formControlName="mcOption7">
-          </mat-checkbox>
-        </div>
-        <div class="essay-answer" *ngIf="type.value === 'Essay'">
-          <p class="show-description">{{description.value}}</p>
-          <mat-form-field class="solution">
-            <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="solution" placeholder="Provide a solution"></textarea>
-          </mat-form-field>
+        <div [ngSwitch]="type.value">
+          <div class="tf-answer" *ngSwitchCase="'True/False'">
+            <p class="show-description">{{description.value}}</p>
+            <p>Provide the correct True/False answer</p>
+            <mat-checkbox formControlName="mcOption1Val">
+              True
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption2Val">
+              False
+            </mat-checkbox>
+          </div>
+          <div class="mc-answer" *ngSwitchCase="'Multiple Choice'">
+            <p class="show-description">{{description.value}}</p>
+            <p>Name each option. Leave blank the extra options if not needed. Check the correct answer</p>
+            <mat-checkbox formControlName="mcOption1Val"><span class="option-number"> A. </span>
+              <input formControlName="mcOption1">
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption2Val"><span class="option-number"> B. </span>
+              <input formControlName="mcOption2">
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption3Val"><span class="option-number"> C. </span>
+              <input formControlName="mcOption3">
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption4Val"><span class="option-number"> D. </span>
+              <input formControlName="mcOption4">
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption5Val"><span class="option-number"> E. </span>
+              <input formControlName="mcOption5">
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption6Val"><span class="option-number"> F. </span>
+              <input formControlName="mcOption6">
+            </mat-checkbox>
+            <mat-checkbox formControlName="mcOption7Val"><span class="option-number"> G. </span>
+              <input formControlName="mcOption7">
+            </mat-checkbox>
+          </div>
+          <div class="essay-answer" *ngSwitchCase="'Essay'">
+            <p class="show-description">{{description.value}}</p>
+            <mat-form-field class="solution">
+              <textarea required matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="solution" placeholder="Provide a solution"></textarea>
+            </mat-form-field>
+          </div>
         </div>
         <mat-form-field class="explanation">
-          <textarea matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="explanation"
-          placeholder="Give an explanation of your answer or solution" required></textarea>
+          <textarea [required]="type.value === 'Pre-Screen'" matInput matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="explanation" placeholder="Give an explanation of your answer or solution"
+            required></textarea>
         </mat-form-field>
-
 
         <div clas="buttons">
           <button [disabled]="form.pending || form.untouched || form.invalid || disableSubmit()" class="submit" mat-raised-button color="primary"
@@ -93,7 +95,7 @@
 
     </form>
   </div>
-  <div class="list-questions">
+  <div class="list-questions" *ngIf="assessment.currentName">
     <app-list-questions></app-list-questions>
   </div>
 </div>

@@ -19,7 +19,7 @@ import { TitleCasePipe } from '@angular/common';
 export class CreateQuestionsComponent implements OnInit, OnDestroy {
 
   constructor(fb: FormBuilder, private router: Router,
-      private assessment: AssessmentService, private question: QuestionService,
+      public assessment: AssessmentService, private question: QuestionService,
       private route: ActivatedRoute, private auth: AuthService,
       public dialog: MatDialog, private db: DatabaseService, private tcp: TitleCasePipe) {
     this.form = fb.group({
@@ -43,9 +43,13 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
       mcOption5Val: [false],
       mcOption6Val: [false],
       mcOption7Val: [false],
-      explanation: ['', Validators.required]
+      explanation: []
     });
-    this.assessment.currentName = this.route.snapshot.params['assessment'];
+    if (this.route.snapshot.params['assessment']) {
+      this.assessment.currentName = this.route.snapshot.params['assessment'].toUpperCase();
+    } else {
+      this.assessment.currentName = undefined;
+    }
   }
 
   private _subscription: Subscription;
@@ -149,28 +153,43 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
   get solution() {
     return this.form.get('solution');
   }
+  get explanation() {
+    return this.form.get('explanation');
+  }
 
   togglePage(event?: Event) {
     if (event) { event.preventDefault(); }
-    this.page === 'first'
+    if (this.assessment.currentName) {
+      this.page === 'first'
       ? this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'last'])
       : this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'first']);
+    } else {
+      this.page === 'first'
+        ? this.router.navigate([`/admin/questions/create`, 'last'])
+        : this.router.navigate([`/admin/questions/create`, 'first']);
+}
   }
 
   disableSubmit(): boolean {
     let disable: boolean;
-
-    if (this.type.value === 'True/False') {
-      disable = (this.mcOption1Val.value && !this.mcOption2Val.value) || (this.mcOption2Val.value && !this.mcOption1Val.value)
-       ? false
-       : true;
-    } else if (this.type.value === 'MC') {
-      disable = this.mcOption1Val.value || this.mcOption2Val.value || this.mcOption3Val.value ||
-        this.mcOption4Val.value || this.mcOption5Val.value || this.mcOption5Val.value || this.mcOption6Val.value || this.mcOption7Val.value
-       ? false
-       : true;
-    } else {
-      disable = this.solution.value ? false : true;
+    switch (this.type.value) {
+      case 'True/False':
+        disable = (this.mcOption1Val.value && !this.mcOption2Val.value) || (this.mcOption2Val.value && !this.mcOption1Val.value)
+         ? false
+         : true;
+        break;
+      case 'Multiple Choice':
+        disable = this.mcOption1Val.value || this.mcOption2Val.value || this.mcOption3Val.value ||
+          this.mcOption4Val.value || this.mcOption5Val.value || this.mcOption5Val.value ||
+          this.mcOption6Val.value || this.mcOption7Val.value
+            ? false
+            : true;
+        break;
+      case 'Essay':
+        disable = this.solution.value ? false : true;
+        break;
+      default:
+        disable = this.explanation.value ? false : true;
     }
     return disable;
   }
@@ -218,7 +237,9 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
     }
 
     value.createdBy = this.auth.loggedInUser.email;
-    value.assessments = [this.assessment.currentName];
+    if (this.assessment.currentName) {
+      value.assessments = [this.assessment.currentName];
+    }
 
     this.question.create(value)
       .then((x) => {
@@ -234,6 +255,10 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
 
   cancel(event: Event) {
     event.preventDefault();
-    this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'first']);
+    if (this.assessment.currentName) {
+      this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'first']);
+    } else {
+      this.router.navigate([`/admin/questions/create`, 'first']);
+    }
   }
 }
