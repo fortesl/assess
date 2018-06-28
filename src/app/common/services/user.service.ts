@@ -46,13 +46,15 @@ export class UserService {
     return this.db.object(`${this._userDbName}/${uid}`).valueChanges() as Observable<AppUser>;
   }
 
-  getUsers(assessment: string): Observable<AppUser[]> {
+  getByAssessment(assessment: string): Observable<AppUser[]> {
     return this.db.list(this._userDbName, ref => ref.orderByKey()).valueChanges().
       map( (list) => {
         const users: AppUser[] = [];
         for (let idx = 0; idx < list.length; idx++) {
-          if ((list[idx] as AppUser).assessments.includes(assessment)) {
-            users.push(list[idx] as AppUser);
+          if ((list[idx] as AppUser).assessments) {
+            if ((list[idx] as AppUser).assessments.includes(assessment)) {
+              users.push(list[idx] as AppUser);
+            }
           }
         }
         return users;

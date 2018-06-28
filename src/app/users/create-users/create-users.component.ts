@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../common/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../common/services/user.service';
 import { AssessmentService } from '../../common/services/assessment.service';
 import { AppUser } from '../../models/app-user';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-create-users',
@@ -14,7 +15,7 @@ import { AppUser } from '../../models/app-user';
 export class CreateUsersComponent implements OnInit {
 
   constructor(fb: FormBuilder, private auth: AuthService, private router: Router,
-    private db: UserService, private assessment: AssessmentService) {
+    private db: UserService, public assessment: AssessmentService, private route: ActivatedRoute) {
     this.form = fb.group({
       createUser: fb.group({
         email: ['', [
@@ -24,14 +25,21 @@ export class CreateUsersComponent implements OnInit {
         role: ['user', Validators.required]
       }),
     });
+    if (this.route.snapshot.params['assessment']) {
+      this.assessment.currentName = this.route.snapshot.params['assessment'];
+      this.usersObservable = this.db.getByAssessment(this.assessment.currentName);
+    } else {
+      this.assessment.currentName = undefined;
+    }
   }
 
   form: FormGroup;
   createUserFailed = '';
   createUserSuccess = '';
+  usersObservable: Observable<any>;
 
   ngOnInit() {
-  }
+}
 
   get email() {
     return this.form.get('createUser.email');
@@ -52,10 +60,12 @@ export class CreateUsersComponent implements OnInit {
     const appUser: AppUser = {
       name: createdUser.name,
       email: createdUser.email,
-      roles: [createdUser.role],
-      assessments: ['CUC-101']
+      roles: [createdUser.role]
     };
 
+    if (this.assessment.currentName) {
+      appUser.assessments = [this.assessment.currentName];
+    }
     this.auth.createUser({email: createdUser.email, password: password})
       .then(user => {
         this.db.saveNewUser(user.uid, appUser);

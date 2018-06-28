@@ -6,10 +6,31 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.site-color {
+  color: rgb(165, 108, 118);
+}
+
+.link {
+  color: #2F609F;
+  margin-right: 2rem;
+}
+.link:hover {
+  cursor: pointer;
+}
+
 .fail {
   text-align: center;
   margin-top: 0.5rem;
   color: red;
+}
+
+.content {
+  width: 97%;
+  margin: auto;
 }
 
 .success {

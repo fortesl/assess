@@ -13,6 +13,7 @@ import { SuperAdminAuthGuard } from './super-admin-auth-guard';
 import { AssessmentComponent } from '../../assessment/assessment.component';
 import { ListQuestionsComponent } from '../../questions/list-questions/list-questions.component';
 import { ResetPasswordComponent } from '@app/users/reset-password/reset-password.component';
+import { ListUsersComponent } from '@app/users/list-users/list-users.component';
 
 export const routes: Route[] = [
   { path: '',  component: HomeComponent},
@@ -26,5 +27,6 @@ export const routes: Route[] = [
   { path: 'questions/create/:page', component: CreateQuestionsComponent, canActivate: [AuthGuard] },
   { path: 'admin/results/:assessment', component: ViewResultsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/users/:assessment/create', component: CreateUsersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/users/:assessment', component: ListUsersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: '**', component: NotFoundComponent }
 ];

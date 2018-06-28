@@ -4,7 +4,7 @@
   </div>
 </ng-template>
 
-<div class="home-content" *ngIf="auth.userLoginChecked; else spinner">
+<div class="content" *ngIf="auth.userLoginChecked; else spinner">
 
   <div *ngIf="auth.loggedInUser.email; else requestLogin">
     <div *ngIf="assess; else noAssessment">

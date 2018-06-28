@@ -1,0 +1,8 @@
+<div *ngIf="name" class="header">
+  <span class="link" (click)="cancel($event)">{{name}}</span>
+  <span>{{ count }}</span>
+  <span mat-button class="link" (click)="goToItems($event)">{{ items }}</span>
+</div>
+<div class="statement">
+  {{ statement }}
+</div>

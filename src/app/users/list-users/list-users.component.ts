@@ -22,7 +22,7 @@ export class ListUsersComponent implements OnDestroy {
 
   constructor(db: UserService, public assessment: AssessmentService, private router: Router, route: ActivatedRoute) {
     assessment.currentName = route.snapshot.params['assessment'];
-    this._subscripton = db.getUsers(assessment.currentName)
+    this._subscripton = db.getByAssessment(assessment.currentName)
       .subscribe(users => {
         this.dataSource = new MatTableDataSource(users);
         this.users = users;

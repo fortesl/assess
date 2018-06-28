@@ -1,7 +1,9 @@
 <mat-drawer-container class="assessment-container" autosize>
   <mat-drawer #drawer class="assessment-sidenav" mode="side">
-    <button mat-icon-button (click)="drawer.toggle()"><mat-icon>close</mat-icon></button>
+    <div class="sidenav-header">
+      <button mat-icon-button (click)="drawer.toggle()"><mat-icon>close</mat-icon></button>
       {{ assessment.currentName }}
+    </div>
     <mat-nav-list>
       <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.path">
         <span *ngIf="!link.icon">{{ link.label }}</span>

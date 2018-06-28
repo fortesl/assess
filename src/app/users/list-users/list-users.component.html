@@ -1,6 +1,6 @@
 <div *ngIf="users.length">
   <div class="header">
-    <button (click)="goToAssessment()" mat-raised-button>{{ assessment?.currentName }}</button> &nbsp;Questions
+    <button (click)="goToAssessment()" mat-raised-button>{{ assessment?.currentName }}</button> &nbsp;Users
   </div>
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">

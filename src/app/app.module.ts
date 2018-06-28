@@ -36,6 +36,7 @@ import { ListQuestionsComponent } from './questions/list-questions/list-question
 import { DialogComponent } from './common/dialog/dialog/dialog.component';
 import { DatabaseService } from './common/database.service';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { HeaderComponent } from './questions/create-questions/header/header.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ResetPasswordComponent } from './users/reset-password/reset-password.co
     AssessmentComponent,
     ListQuestionsComponent,
     DialogComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

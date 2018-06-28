@@ -1,25 +1,3 @@
-.question-container {
-  width: 95%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row wrap;
-}
-
-.create-form {
-  width: 70%;
-  padding: 1rem;
-}
-.list-questions {
-  width: 30%;
-  min-width: 400px;
-}
-
-.header {
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin: 1rem 0;
-}
 
 .areas {
   width: 100%;

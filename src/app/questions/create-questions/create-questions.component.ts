@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { AssessmentService } from '../../common/services/assessment.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DatabaseService } from '../../common/database.service';
 import { DialogComponent } from '../../common/dialog/dialog/dialog.component';
 import { TitleCasePipe } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-create-questions',
@@ -21,7 +23,7 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
   constructor(fb: FormBuilder, private router: Router,
       public assessment: AssessmentService, private question: QuestionService,
       private route: ActivatedRoute, private auth: AuthService,
-      public dialog: MatDialog, private db: DatabaseService, private tcp: TitleCasePipe) {
+      public dialog: MatDialog, private db: DatabaseService, private tcp: TitleCasePipe, private location: Location) {
     this.form = fb.group({
       areas: ['', Validators.required],
       type: ['', Validators.required],
@@ -46,15 +48,16 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
       explanation: []
     });
     if (this.route.snapshot.params['assessment']) {
-      this.assessment.currentName = this.route.snapshot.params['assessment'].toUpperCase();
+      this.assessment.currentName = this.route.snapshot.params['assessment'];
+      this.questionsObservable = this.question.getByAssessment(this.assessment.currentName);
     } else {
       this.assessment.currentName = undefined;
     }
   }
 
   private _subscription: Subscription;
-  private _assesSubscription: Subscription;
   createError: boolean;
+  questionsObservable: Observable<any>;
 
   form: FormGroup;
   submitMessage: string;
@@ -93,7 +96,6 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
 
     this.dropdowns.forEach(x => x.subscription = this.db.getList(x.name)
       .subscribe(list => x.items = list));
-
   }
 
   ngOnDestroy(): void {
@@ -167,7 +169,7 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
       this.page === 'first'
         ? this.router.navigate([`/admin/questions/create`, 'last'])
         : this.router.navigate([`/admin/questions/create`, 'first']);
-}
+    }
   }
 
   disableSubmit(): boolean {
@@ -241,7 +243,8 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
       value.assessments = [this.assessment.currentName];
     }
 
-    this.question.create(value)
+    if (this.form.valid) {
+      this.question.create(value)
       .then((x) => {
         this.form.get('description').reset();
         this.form.get('explanation').reset();
@@ -250,10 +253,16 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
         this.togglePage();
       })
       .catch(error => { this.submitMessage = error.message; this.createError = true; });
+    }
 
   }
 
   cancel(event: Event) {
+    event.preventDefault();
+    this.router.navigate(['/admin/assessment', this.assessment.currentName]);
+  }
+
+  back(event: Event) {
     event.preventDefault();
     if (this.assessment.currentName) {
       this.router.navigate([`/admin/questions/${this.assessment.currentName}/create`, 'first']);
@@ -261,4 +270,5 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
       this.router.navigate([`/admin/questions/create`, 'first']);
     }
   }
+
 }

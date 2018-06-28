@@ -1,5 +1,5 @@
-<nav mat-tab-nav-bar>
-  <a mat-tab-link routerLink="/">
+<nav mat-tab-nav-bar class="mat-elevation-z6">
+  <a mat-tab-link  class="brand" routerLink="/">
     <img title="assess" alt="assess" src="/assets/favicons/asz.png">
   </a>
   <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="'active-nav-link'">

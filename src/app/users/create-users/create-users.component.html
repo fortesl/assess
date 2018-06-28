@@ -1,55 +1,33 @@
-<div class="user-container">
-  <div class="create-form">
-      <div class="header">
-          Create User
-        </div>
-        <form class="create-user-form" [formGroup]="form" (ngSubmit)="submit(form.value)">
-          <div formGroupName="createUser">
-            <mat-form-field class="email">
-              <mat-icon class="email" matPrefix>email</mat-icon>
-              <input
-                formControlName="email"
-                matInput
-                placeholder="Email">
-              <mat-error *ngIf="email.invalid && email.errors['email']">
-                invalid email address
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field class="name">
-              <input
-                formControlName="name"
-                matInput
-                placeholder="First and Last Name">
-              <mat-error *ngIf="name.invalid && name.errors['minlength']">
-                Invalid name
-              </mat-error>
-            </mat-form-field>
-            <p>Role: </p>
-            <mat-radio-group formControlName="role">
-              <mat-radio-button value="user">User</mat-radio-button>
-              <mat-radio-button value="admin">Administrator</mat-radio-button>
-            </mat-radio-group>
+<div class="content">
+  <app-header [name]="assessment.currentName" [link]="'/admin/assessment'" [count]="(usersObservable | async)?.length" [items]="'users'"
+    [statement]="'Create new user'"></app-header>
 
-          </div>
-          <button
-            [disabled]="form.pending || form.untouched || form.invalid"
-            class="submit"
-            mat-raised-button
-            color="primary"
-            type=submit>Create User
-          </button>
-          <button
-            routerLink="."
-            (click)="cancel($event)"
-            mat-raised-button
-            class="reset">Cancel
-          </button>
-        </form>
-        <mat-error [ngClass]="{'fail': createUserFailed, 'success': createUserSuccess}">{{ createUserFailed || createUserSuccess }}</mat-error>
+  <form class="create-user-form" [formGroup]="form" (ngSubmit)="submit(form.value)">
+    <div formGroupName="createUser">
+      <mat-form-field class="email">
+        <mat-icon class="email" matPrefix>email</mat-icon>
+        <input formControlName="email" matInput placeholder="Email">
+        <mat-error *ngIf="email.invalid && email.errors['email']">
+          invalid email address
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="name">
+        <input formControlName="name" matInput placeholder="First and Last Name">
+        <mat-error *ngIf="name.invalid && name.errors['minlength']">
+          Invalid name
+        </mat-error>
+      </mat-form-field>
+      <p>Role: </p>
+      <mat-radio-group formControlName="role">
+        <mat-radio-button value="user">User</mat-radio-button>
+        <mat-radio-button value="admin">Administrator</mat-radio-button>
+      </mat-radio-group>
 
-  </div>
-  <div class="list-users">
-    <app-list-users></app-list-users>
-  </div>
-
+    </div>
+    <button [disabled]="form.pending || form.untouched || form.invalid" class="submit" mat-raised-button color="primary" type=submit>Create User
+    </button>
+    <button routerLink="." (click)="cancel($event)" mat-raised-button class="reset">Cancel
+    </button>
+  </form>
+  <mat-error [ngClass]="{'fail': createUserFailed, 'success': createUserSuccess}">{{ createUserFailed || createUserSuccess }}</mat-error>
 </div>
