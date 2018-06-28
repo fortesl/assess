@@ -109,6 +109,15 @@ export class CreateQuestionsComponent implements OnInit, OnDestroy {
   get type() {
     return this.form.get('type');
   }
+  get areas() {
+    return this.form.get('areas');
+  }
+  get duration() {
+    return this.form.get('duration');
+  }
+  get level() {
+    return this.form.get('level');
+  }
   get mcOption1Val() {
     return this.form.get('mcOption1Val');
   }

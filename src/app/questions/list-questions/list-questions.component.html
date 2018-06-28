@@ -1,4 +1,4 @@
-<div class="questions-container" *ngIf="questions.length; else noQuestions">
+<div class="content" *ngIf="questions.length; else noQuestions">
   <div class="header">
     <button (click)="goToAssessment()" mat-raised-button>{{ assessment?.currentName }}</button> &nbsp;Questions
   </div>
@@ -33,5 +33,6 @@
 </div>
 
 <ng-template #noQuestions>
-  No questions yet for &nbsp; {{ assessment?.currentName }}
+  <app-no-content [name]="assessment.currentName" [link]="'/admin/assessment'"
+    [statement]="'No Questions yet for '"></app-no-content>
 </ng-template>

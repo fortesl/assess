@@ -59,3 +59,9 @@ body {
   align-items: center;
 }
 
+.no-content {
+  text-align: center;
+  margin: auto;
+  margin-top: 2rem;
+}
+

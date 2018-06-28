@@ -27,7 +27,9 @@
           required></textarea>
       </mat-form-field>
       <div class="last-page-button">
-        <button mat-raised-button [disabled]="!type.value || description?.value?.length < 5" color="primary" (click)="togglePage($event)">Provide the Solution To the Question </button>
+        <button mat-raised-button [disabled]="!type.value || !description.value || !duration.value || !level.value || !areas.value" color="primary" (click)="togglePage($event)">
+          Provide the Solution To the Question
+        </button>
         <a *ngIf="assessment.currentName" [routerLink]="['/admin/assessment', assessment.currentName]" mat-button (click)="cancel($event)">
           <span>Cancel</span>
         </a>

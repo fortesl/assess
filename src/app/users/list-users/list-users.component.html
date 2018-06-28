@@ -1,4 +1,4 @@
-<div *ngIf="users.length">
+<div class="content" *ngIf="users.length; else noUsers">
   <div class="header">
     <button (click)="goToAssessment()" mat-raised-button>{{ assessment?.currentName }}</button> &nbsp;Users
   </div>
@@ -29,3 +29,7 @@
   </div>
   <mat-paginator *ngIf="users.length > 5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
+
+<ng-template #noUsers>
+  <app-no-content [name]="assessment.currentName" [link]="'/admin/assessment'" [statement]="'No users yet for '"></app-no-content>
+</ng-template>
